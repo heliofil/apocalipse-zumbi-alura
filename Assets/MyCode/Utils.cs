@@ -7,6 +7,7 @@ public static class Utils {
     public const int BULLET_TIME_INIT = 150;
     public const string BUTTON_FIRE = "Fire1";
     public const int ZUMBI_MAX = 55;
+    public const string SCENE_PARKING = "Parking";
 
 
     public const int TIME_TO_NEW_INIT = 850;
@@ -21,7 +22,7 @@ public static class Utils {
     public const string HORIZONTAL = "Horizontal";
 
     public static PlayerDomain CreatePlayer() {
-        return new PlayerDomain(10,5);
+        return new PlayerDomain(10,10);
     }
 
     private static readonly int[,] ZUMBI_DEFINITION = new int[ZUMBI_DEFINITION_SIZE,4] {
@@ -29,12 +30,12 @@ public static class Utils {
         { 3,39,3,1 } ,
         { 4,16,4 ,1 },
         { 5,29,5,2 },
-        { 9,44,3,1 },
+        { 9,44,3,5 },
         { 10,25,4,2 },
         { 12,16,4,1 },
-        { 14,19,5,1 },
+        { 14,19,5,3 },
         { 17,12,4,1 },
-        { 18,19,5,1 },
+        { 18,19,5,2 },
         { 19,15,3,1 },
         { 23,15,3,1 },
         { 27,12,4,2 }

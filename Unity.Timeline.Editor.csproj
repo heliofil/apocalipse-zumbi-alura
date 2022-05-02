@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{CE3188D0-0806-7E52-DCCB-1734A3555F96}</ProjectGuid>
+    <ProjectGuid>{1E29A851-44DF-9DC8-B0DC-F9B5655E8443}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Unity.Timeline.Editor</AssemblyName>
@@ -178,9 +178,9 @@
     <Compile Include="Library\PackageCache\com.unity.timeline@1.6.4\Editor\Utilities\AnimatedParameterCache.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.6.4\Editor\Utilities\FileUtility.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.6.4\Editor\State\WindowState.cs" />
+    <Compile Include="Library\PackageCache\com.unity.timeline@1.6.4\Editor\inspectors\DirectorNamedColorInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.6.4\Editor\Utilities\Scopes\GUIColorOverride.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.6.4\Editor\treeview\ItemGui\TimelineClipGUI.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline@1.6.4\Editor\inspectors\DirectorNamedColorInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.6.4\Editor\inspectors\AnimationPlayableAssetInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.6.4\Editor\Actions\TrackAction.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.6.4\Editor\Utilities\Range.cs" />
@@ -1221,15 +1221,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Unity.Timeline.csproj">
-      <Project>{EBF39011-E951-63D4-616B-60596203CDC1}</Project>
+      <Project>{A79E6823-A292-6C3D-0E8D-763CE4C08AEB}</Project>
       <Name>Unity.Timeline</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.TestRunner.csproj">
-      <Project>{5F4179DE-79EF-B9BA-7B7C-A765A5BD445D}</Project>
+      <Project>{E19E6C01-5E85-04ED-2023-E162C919D380}</Project>
       <Name>UnityEngine.TestRunner</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.TestRunner.csproj">
-      <Project>{A1CC7418-63E0-E192-9B83-1050E64EE725}</Project>
+      <Project>{871F5123-CFF9-77A8-91F7-F3A376B5D858}</Project>
       <Name>UnityEditor.TestRunner</Name>
     </ProjectReference>
   </ItemGroup>

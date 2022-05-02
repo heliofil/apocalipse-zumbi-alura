@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,16 +6,17 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private Rigidbody _rigidbody;
     private PlayerDomain _playerDomain;
-
+    private UIController _uiController;
     public LayerMask BaseFloor;
-    public GameObject GameOverText;
+    public GameObject Canvas;
 
 
     public void TakeHit(int hit) {
-     
+
         if(_playerDomain.ReduceLife(hit)) {
-            GameOver();
-        }
+            _uiController.GameOver();
+        };
+        _uiController.SetLifeBar(_playerDomain.GetLife());
 
     }
 
@@ -27,16 +25,15 @@ public class PlayerController : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
+        _uiController = Canvas.GetComponent<UIController>();
         _playerDomain = Utils.CreatePlayer();
-
+        _uiController.MaxLife(_playerDomain.GetLife());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if((_playerDomain.IsDead()) && (Input.GetButtonDown(Utils.BUTTON_FIRE))) {
-            Restart();
-        }
+        
 
         _animator.SetBool(Utils.ON_MOVE, false);
         _direction.Set(Input.GetAxis(Utils.HORIZONTAL), 0,Input.GetAxis(Utils.VERTICAL));
@@ -70,18 +67,6 @@ public class PlayerController : MonoBehaviour
     Vector3 Move(Vector3 direction) {
         return _rigidbody.position + (direction * _playerDomain.GetSpeed() * Time.deltaTime);
     }
-
-    void GameOver() {
-        GameOverText.SetActive(true);
-        Time.timeScale = 0;
-    }
-
-    void Restart() {
-        _playerDomain = null;
-        SceneManager.LoadScene("parking");
-        Time.timeScale = 1;
-    }
-
 
 
 

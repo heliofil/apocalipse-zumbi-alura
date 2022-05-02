@@ -2,29 +2,27 @@
 
     private int speed;
     private int life;
-    private bool dead;
-
 
     public PlayerDomain(int speed,int life) {
         this.speed = speed;
         this.life = life;
-        this.dead = false;
+
     }
 
     public int GetSpeed() {
         return speed;
     }
 
-    public bool IsDead() {
-        return dead;
+    public int GetLife() {
+        return life;
     }
 
-    public bool ReduceLife(int reduce) {
+       public bool ReduceLife(int reduce) {
         life -= reduce;
         if(life < 1) {
-            dead = true;
+            return true;
         }
-        return dead;
+        return false;
     }
 
 }
