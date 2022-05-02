@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +28,8 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _uiController = Canvas.GetComponent<UIController>();
         _playerDomain = Utils.CreatePlayer();
-        _uiController.MaxLife(_playerDomain.GetLife());
+        _uiController.SetMaxLifeBar(_playerDomain.GetLife());
+        _uiController.SetLifeBar(_playerDomain.GetLife());
     }
 
     // Update is called once per frame

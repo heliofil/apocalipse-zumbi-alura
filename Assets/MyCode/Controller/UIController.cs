@@ -6,12 +6,18 @@ public class UIController : MonoBehaviour
 {
     
     private Slider _slider;
+    private Text _bulletText;
     private bool _gameOver;
 
 
     public void SetLifeBar(int lifeBar) {
         _slider.value = lifeBar;
     }
+
+    public void SetBulletText(int munition) {
+        _bulletText.text = munition.ToString();
+    }
+
 
     public void GameOver() {
 
@@ -25,13 +31,15 @@ public class UIController : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void MaxLife(int life) {
+    public void SetMaxLifeBar(int life) {
         _slider.maxValue = life;
     }
 
     void Start() {
         _slider = transform.GetChild(1).GetChild(0).GetComponent<Slider>();
+        _bulletText = transform.GetChild(1).GetChild(1).GetComponent<Text>();
         _gameOver = false;
+        _bulletText.text = 0.ToString();
     }
 
 

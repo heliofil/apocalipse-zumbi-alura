@@ -9,6 +9,7 @@ public class FireGunController : MonoBehaviour
     public GameObject ShootAim;
     private int _munition;
     private int _bulletType;
+    private UIController _uicontroller;
 
     public void SetMunition(int munition) {
         _munition = munition;
@@ -19,6 +20,9 @@ public class FireGunController : MonoBehaviour
         _bulletType = bulletType;
     }
 
+    private void Start() {
+        _uicontroller = GameObject.FindGameObjectWithTag("UI").gameObject.GetComponent<UIController>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -28,6 +32,7 @@ public class FireGunController : MonoBehaviour
            GameObject bullet = Instantiate(Bullet,ShootAim.transform.position,ShootAim.transform.rotation);
            BulletController bulletController = bullet.gameObject.GetComponent<BulletController>();
             bulletController.DefineBulletById(_bulletType);
+            _uicontroller.SetBulletText(_munition);
            _munition--;
 
         }

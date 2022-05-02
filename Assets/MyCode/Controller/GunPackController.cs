@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GunPackController : MonoBehaviour
@@ -14,7 +12,6 @@ public class GunPackController : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         FireGunController fireGun;
         if(other.TryGetComponent<FireGunController>(out fireGun)) {
-         
             int rad = Random.Range(9,20) * Utils.GUNPACK_SIZE - _bulletType;
             fireGun.SetMunition(rad);
             fireGun.SetBulletType(_bulletType);
