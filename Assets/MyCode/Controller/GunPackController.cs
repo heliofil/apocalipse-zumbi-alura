@@ -10,9 +10,10 @@ public class GunPackController : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        FireGunController fireGun;
-        if(other.TryGetComponent<FireGunController>(out fireGun)) {
+        FireGunController fireGun = other.GetComponentInChildren<FireGunController>();
+        if(fireGun!=null) {
             int rad = Random.Range(9,20) * Utils.GUNPACK_SIZE - _bulletType;
+            fireGun.MunitionZero();
             fireGun.SetMunition(rad);
             fireGun.SetBulletType(_bulletType);
             GameObject gunPackGenerator = GameObject.FindGameObjectWithTag(Utils.GUNPACK_TAG);

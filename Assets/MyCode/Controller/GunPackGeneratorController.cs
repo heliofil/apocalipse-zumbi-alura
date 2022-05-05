@@ -39,7 +39,7 @@ public class GunPackGeneratorController : MonoBehaviour
 
     private void CreateGunPack(int rad) {
         GameObject gunpackInstance = Instantiate(Gunpack,transform.position,transform.rotation);
-        gunpackInstance.transform.GetChild(rad).gameObject.SetActive(true);
+        gunpackInstance.transform.GetChild(0).GetChild(rad).gameObject.SetActive(true);
         GunPackController gunPackController = gunpackInstance.GetComponent<GunPackController>();
         gunPackController.setBulletType(rad);
     }

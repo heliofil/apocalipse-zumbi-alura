@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -6,12 +7,16 @@ public class UIController : MonoBehaviour
 {
     
     private Slider _slider;
-    private Text _bulletText;
+    private TextMeshProUGUI _bulletText;
     private bool _gameOver;
 
 
     public void SetLifeBar(int lifeBar) {
         _slider.value = lifeBar;
+    }
+
+    public void SetBulletColor(Color color) {
+        _bulletText.color = color;
     }
 
     public void SetBulletText(int munition) {
@@ -37,9 +42,10 @@ public class UIController : MonoBehaviour
 
     void Start() {
         _slider = transform.GetChild(1).GetChild(0).GetComponent<Slider>();
-        _bulletText = transform.GetChild(1).GetChild(1).GetComponent<Text>();
+        _bulletText = transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
         _gameOver = false;
         _bulletText.text = 0.ToString();
+        _bulletText.color = Color.white;
     }
 
 

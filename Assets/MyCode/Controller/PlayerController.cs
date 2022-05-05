@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+   
     private Vector3 _direction;
     private Animator _animator;
     private Rigidbody _rigidbody;
     private PlayerDomain _playerDomain;
     private UIController _uiController;
+    private bool _walk;
+
     public LayerMask BaseFloor;
     public GameObject Canvas;
 
@@ -20,6 +23,15 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void HasGun() {
+        _animator.SetBool(Utils.IS_GUN,true);
+        _walk = true; 
+    }
+
+    public void NoGun() {
+        _animator.SetBool(Utils.IS_GUN,false);
+        _walk = false;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -67,7 +79,11 @@ public class PlayerController : MonoBehaviour
     }
 
     Vector3 Move(Vector3 direction) {
-        return _rigidbody.position + (direction * _playerDomain.GetSpeed() * Time.deltaTime);
+        int speed = _playerDomain.GetSpeed();
+        if(_walk) {
+            speed = _playerDomain.GetSpeed() / 2;
+        }
+        return _rigidbody.position + (direction * speed * Time.deltaTime);
     }
 
 

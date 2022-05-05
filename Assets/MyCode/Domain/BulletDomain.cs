@@ -1,16 +1,17 @@
-﻿using System;
+﻿using UnityEngine;
 
 public class BulletDomain {
 
     private int speed;
     private int[] hits;
     private int hitId;
+    private Color color;
 
-    public BulletDomain(int speed,int[] hits) {
+    public BulletDomain(int speed,int[] hits,Color color) {
         this.speed = speed;
         this.hits = hits;
         this.hitId = 0;
-    
+        this.color = color;
     }
 
     public int GetSpeed() {
@@ -26,7 +27,12 @@ public class BulletDomain {
         return hit;
     }
 
-    internal object GetHits() {
-        throw new NotImplementedException();
+    public int[] GetHits() {
+        return hits;
     }
+
+    public Color GetColor() {
+        return color;
+    }
+
 }
