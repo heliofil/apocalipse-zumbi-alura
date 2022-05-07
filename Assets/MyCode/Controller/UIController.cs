@@ -10,6 +10,17 @@ public class UIController : MonoBehaviour
     private TextMeshProUGUI _bulletText;
     private bool _gameOver;
 
+    private static UIController uIInstance;
+    public static UIController UIInstance {
+        get {
+        if(!uIInstance) {
+                uIInstance = GameObject.FindWithTag("UI").GetComponent<UIController>();
+            }
+
+        return uIInstance; 
+    }
+}
+
 
     public void SetLifeBar(int lifeBar) {
         _slider.value = lifeBar;
@@ -40,7 +51,7 @@ public class UIController : MonoBehaviour
         _slider.maxValue = life;
     }
 
-    void Start() {
+    void Awake() {
         _slider = transform.GetChild(1).GetChild(0).GetComponent<Slider>();
         _bulletText = transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
         _gameOver = false;

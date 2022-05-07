@@ -1,64 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FireGunController : MonoBehaviour
 {
     
-    public GameObject Bullet;
     public GameObject ShootAim;
-    public GameObject Canvas;
-    public GameObject Player;
-    private int _munition;
-    private int _bulletType;
-    private Color _color;
-    private UIController _uicontroller;
-    private PlayerController _playercontroller;
-
+    public AudioClip ShootAudio;
+    private int munition;
+    private int bulletType;
+    
     public void SetMunition(int munition) {
-        _munition = munition;
-        _uicontroller.SetBulletText(_munition);
+        this.munition = munition;
+        UIController.UIInstance.SetBulletText(this.munition);
     }
 
     public void MunitionZero() {
         SetMunition(0);
-        _playercontroller.NoGun();
-        transform.GetChild(0).GetChild(_bulletType).gameObject.SetActive(false);
+        PlayerController.PlayerInstance.NoGun();
+        transform.GetChild(0).GetChild(bulletType).gameObject.SetActive(false);
     }
 
-    public void SetBulletType(int bulletType) {
-
-        _bulletType = bulletType;
-        _uicontroller.SetBulletColor(Utils.COLOR_DEFINITION[bulletType]);
+    public void DefineById(int bulletType) {
+        int rad = Random.Range(6,12) * Utils.GUNPACK_SIZE - bulletType;
+        SetMunition(rad);
+        this.bulletType = bulletType;
+        UIController.UIInstance.SetBulletColor(Utils.COLOR_DEFINITION[bulletType]);
         transform.GetChild(0).GetChild(bulletType).gameObject.SetActive(true);   
-        _playercontroller.HasGun();
+        PlayerController.PlayerInstance.HasGun();
         
-    }
-
-    
-
-    private void Start() {
-        _uicontroller = Canvas.GetComponent<UIController>();
-        _playercontroller = Player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(_munition < 1) {
+
+        if(munition < 1) {
             MunitionZero();
             return;
         }
 
         if(Input.GetButtonDown(Utils.BUTTON_FIRE)) {
-
-           GameObject bullet = Instantiate(Bullet,ShootAim.transform.position,ShootAim.transform.rotation);
-           BulletController bulletController = bullet.gameObject.GetComponent<BulletController>();
-            bulletController.DefineBulletById(_bulletType);
-            SetMunition(_munition);
-            _munition--;
+            Shoot();
         }
 
 
     }
+
+    void Shoot() {
+        BulletController.CreateInstance(bulletType,ShootAim.transform.position,ShootAim.transform.rotation);
+        SetMunition(munition);
+        munition--;
+        AudioSourceController.AudioSourceInstance.PlayOneShot(ShootAudio);
+        transform.rotation = new Quaternion(transform.rotation.x + Random.Range(-0.02f,0.02f),transform.rotation.y,transform.rotation.z,transform.rotation.w);
+    }
+
 }

@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class ZumbiGeneratorContoller : MonoBehaviour
 {
-    public GameObject Zumbi;
-    private int _timeToNew;
+    private int timeToNew;
 
     private void Start() {
-        _timeToNew = Utils.GetTimeToNew(3);
+        timeToNew = Utils.GetTimeToNew(3);
     }
 
     // Update is called once per frame
@@ -16,23 +15,17 @@ public class ZumbiGeneratorContoller : MonoBehaviour
             return;
         }
 
-        if(_timeToNew < 1) {
+        if(timeToNew < 1) {
             int rad = Random.Range(0,13);
-            CreateZumbi(rad);
-            _timeToNew = Utils.GetTimeToNew(rad);
+            ZumbiController.CreateInstance(rad,transform.position,transform.rotation);
+            timeToNew = Utils.GetTimeToNew(rad);
         }
 
-        _timeToNew -= 1;
-
+        timeToNew -= 1;
 
     }
 
-    private void CreateZumbi(int rad) {
-        
-        GameObject zumbiInstance = Instantiate(Zumbi,transform.position,transform.rotation);
-        ZumbiController zumbiController = zumbiInstance.GetComponent<ZumbiController>();
-        zumbiController.DefineZumbiById(rad);
-    }
+    
 
 
 }

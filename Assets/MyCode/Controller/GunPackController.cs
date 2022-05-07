@@ -1,25 +1,25 @@
 using UnityEngine;
 
-public class GunPackController : MonoBehaviour
-{
+public class GunPackController:MonoBehaviour {
     
-    private int _bulletType;
+    private int bulletType;
 
-    public void setBulletType(int bulletType) {
-        _bulletType = bulletType;
+    public static void CreateInstanceById(int id) {
+        GunPackController newGunPack = Instantiate(Resources.Load<GameObject>(Utils.GUNPACK_PATH))
+            .GetComponent<GunPackController>();
+        newGunPack.bulletType = id;
+        newGunPack.transform.position = Utils.GetRandomPosition();
+        newGunPack.transform.GetChild(0).GetChild(id).gameObject.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider other) {
         FireGunController fireGun = other.GetComponentInChildren<FireGunController>();
-        if(fireGun!=null) {
-            int rad = Random.Range(9,20) * Utils.GUNPACK_SIZE - _bulletType;
+        if(fireGun != null) {
             fireGun.MunitionZero();
-            fireGun.SetMunition(rad);
-            fireGun.SetBulletType(_bulletType);
-            GameObject gunPackGenerator = GameObject.FindGameObjectWithTag(Utils.GUNPACK_TAG);
-            gunPackGenerator.GetComponent<GunPackGeneratorController>().SetTimeToNew(Utils.GetTimeToNew(rad));
+            fireGun.DefineById(bulletType);
             Destroy(gameObject);
         }
+
     }
 
 

@@ -1,45 +1,33 @@
-﻿public class ZumbiDomain {
-   
-    private int typeBody;
-    private int life;
-    private int speed;
-    private int strength;
-    private bool dead;
+﻿public class ZumbiDomain : BasicDomain {
 
+    private static readonly int[,] ZUMBI_DEFINITION = new int[Utils.ZUMBI_DEFINITION_SIZE,4] {
+        { 1,19,3,1 },
+         { 3,39,2,1 } ,
+         { 4,16,3 ,1 },
+        { 5,29,3,2 },
+        { 9,44,1,5 },
+        { 10,25,3,2 },
+        { 2,16,2,1 },
+        { 14,19,3,3 },
+        { 17,12,2,1 },
+        { 18,19,1,2 },
+        { 9,15,1,1 },
+        { 23,15,3,1 },
+        { 27,12,1,2 }
+    };
 
-    public ZumbiDomain(int typeBody, int life, int speed,int strength) {
-        this.typeBody = typeBody;
-        this.life = life;
-        this.speed = speed;
-        this.strength = strength;
-        dead = false;
+    public int Strength {
+        get; 
     }
 
-    public int GetTypeBody() {
-        return typeBody;
+    public ZumbiDomain(int id) : this(ZUMBI_DEFINITION[id,2],ZUMBI_DEFINITION[id,0],ZUMBI_DEFINITION[id,1],ZUMBI_DEFINITION[id,3]) {
+
     }
 
-    public int GetLife() {
-        return life;
+    public ZumbiDomain(int speed,int id,int life, int strength): base(speed,id,life) {
+        
+        this.Strength = strength;
+        
     }
-
-    public int GetSpeed() {
-        return speed;
-    }
-
-    public int GetStrength() {
-        return strength;
-    }
-
-    public bool ReduceLife(int reduce) {
-        life -= reduce;
-        if(life < 1) {
-            dead = true;
-        }
-        return dead;
-    }
-
     
-
-
 }

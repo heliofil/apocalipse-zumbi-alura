@@ -1,26 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
     
-    private Rigidbody _rigidbody;
-    private int _bulletTime;
-    private BulletDomain _bulletDomain;
+    private Rigidbody rigidbd;
+    private BulletDomain bullet;
 
-    public void DefineBulletById(int id) {
-        transform.GetChild(id).gameObject.SetActive(true);
-        _bulletDomain = Utils.CreateBullet(id);
+
+
+
+    public static void CreateInstance(int id,Vector3 position, Quaternion rotation) {
+        BulletController bulletController = Instantiate(Resources.Load<GameObject>(Utils.BULLET_PATH),position,rotation).GetComponent<BulletController>();
+        bulletController.transform.GetChild(id).gameObject.SetActive(true);
+        bulletController.bullet = new BulletDomain(id);
     }
 
 
-    // Start is called before the first frame update
+   
     void Start()
     {
-        _bulletTime = Utils.BULLET_TIME_INIT;
-        _rigidbody = GetComponent<Rigidbody>();
-               
+        rigidbd = GetComponent<Rigidbody>();
+
     }
 
     void FixedUpdate()
@@ -32,24 +32,20 @@ public class BulletController : MonoBehaviour
    
    
     private void OnTriggerEnter(Collider other) {
-            ZumbiController zumbi;
-        if(other.TryGetComponent<ZumbiController>(out zumbi)) {
-            zumbi.SetBullet(_bulletDomain);
+        if(other.TryGetComponent<ZumbiController>(out ZumbiController zumbi)) {
+            zumbi.SetBullet(bullet);
         }
         Destroy(gameObject);
     }
 
    private void Moviment() {
-        _rigidbody.MovePosition(
-           _rigidbody.position + transform.forward
-           * _bulletDomain.GetSpeed()
-           * Time.deltaTime);
+        rigidbd.MovePosition(
+           rigidbd.position + bullet.Speed * Time.deltaTime * transform.forward);
         ;
     }
 
     private void BulletLife() {
-        _bulletTime = _bulletTime - 1;
-        if(_bulletTime < 0) {
+        if(bullet.ReduceLife(1)) {
             Destroy(gameObject);
         }
     }

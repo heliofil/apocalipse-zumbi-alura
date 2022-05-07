@@ -1,16 +1,21 @@
 ﻿using UnityEngine;
 public static class Utils {
+    
     public const string GUNPACK_TAG = "GunPack";
     public const int GUNPACK_SIZE = 4;
     public const int ZUMBI_DEFINITION_SIZE = 13;
     public const float IMPACT_DISTANCE = 2.2f;
     public const int BULLET_TIME_INIT = 150;
     public const string BUTTON_FIRE = "Fire1";
-    public const int ZUMBI_MAX = 55;
+    public const int ZUMBI_MAX = 75;
     public const string SCENE_PARKING = "Parking";
 
+    public const string GUNPACK_PATH = "MyPrefabs/GunPack";
+    public const string ZUMBI_PATH = "MyPrefabs/Zumbi";
+    public const string BULLET_PATH = "MyPrefabs/Bullet";
 
     public const int TIME_TO_NEW_INIT = 850;
+    public const int TIME_TO_NEW_GUN = 100;
 
     public const string IS_GUN = "IsGun";
     public const string ON_TAKE_HIT = "OnTakeHit";
@@ -22,34 +27,7 @@ public static class Utils {
     public const string VERTICAL = "Vertical";
     public const string HORIZONTAL = "Horizontal";
 
-    public static PlayerDomain CreatePlayer() {
-        return new PlayerDomain(10,10);
-    }
-
-    private static readonly ZumbiDomain[] ZUMBI_DEFINITION = new ZumbiDomain[ZUMBI_DEFINITION_SIZE] {
-        new ZumbiDomain(1,19,3,1),
-        new ZumbiDomain( 3,39,2,1 ),
-        new ZumbiDomain( 4,16,3 ,1),
-        new ZumbiDomain(5,29,3,2),
-        new ZumbiDomain(9,44,1,5),
-        new ZumbiDomain(10,25,3,2),
-        new ZumbiDomain(12,16,2,1),
-        new ZumbiDomain(14,19,3,3),
-        new ZumbiDomain(17,12,2,1),
-        new ZumbiDomain(18,19,1,2),
-        new ZumbiDomain(19,15,1,1),
-        new ZumbiDomain(23,15,3,1),
-        new ZumbiDomain(27,12,1,2)
-    };
-
-    public static ZumbiDomain CreateZumbi(int rad) {
-        return new ZumbiDomain(
-            ZUMBI_DEFINITION[rad].GetTypeBody(),
-            ZUMBI_DEFINITION[rad].GetLife(),
-            ZUMBI_DEFINITION[rad].GetSpeed(),
-            ZUMBI_DEFINITION[rad].GetStrength()
-            );
-    }
+    public static readonly float[] PARKING_LIMITS = new float[2] { 21f,15f };
 
     public static readonly Color[] COLOR_DEFINITION = new Color[GUNPACK_SIZE] {
         new Color(0.2f,0.2f,0.8f),
@@ -58,24 +36,22 @@ public static class Utils {
         new Color(0.2f,0.8f,0.2f)
     };
 
-    private static readonly BulletDomain[] BULLET_DEFINITION = new BulletDomain[GUNPACK_SIZE] {
-        new BulletDomain(25,new int[]{1,1,1,1},COLOR_DEFINITION[0]),
-        new BulletDomain(25,new int[]{4,2,2,1},COLOR_DEFINITION[1]),
-        new BulletDomain(25,new int[]{4,4,4,4},COLOR_DEFINITION[2]),
-        new BulletDomain(25,new int[]{3,2,3,3},COLOR_DEFINITION[3])
-    };
-
-    public static BulletDomain CreateBullet(int rad) {
-        return new BulletDomain(
-            BULLET_DEFINITION[rad].GetSpeed(),
-            BULLET_DEFINITION[rad].GetHits(),
-            BULLET_DEFINITION[rad].GetColor()
-       );
-    }
-
-
     public static int GetTimeToNew(int rad) {
         return (5 * (rad +1)) * 10;
     }
 
+    public static Vector3 GetRandomPosition() {
+       
+        float min = Utils.PARKING_LIMITS[0] * -1;
+        float max = Utils.PARKING_LIMITS[0];
+        float x = Random.Range(min,max);
+        min = Utils.PARKING_LIMITS[1] * -1;
+        max = Utils.PARKING_LIMITS[1];
+        float z = Random.Range(min,max);
+
+        return new Vector3(x,IMPACT_DISTANCE,z);
+
+
+    }
+ 
 }

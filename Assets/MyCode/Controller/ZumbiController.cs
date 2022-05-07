@@ -2,82 +2,85 @@ using UnityEngine;
 
 public class ZumbiController : MonoBehaviour{
    
-    private GameObject Player;
+    
 
-    private ZumbiDomain _zumbiDomain;
-    private Rigidbody _rigidbody;
-    private Animator _animator;
-    private PlayerController _playerController;
+    private ZumbiDomain zumbi;
+    private Rigidbody rigidbd;
+    private Animator animator;
 
+    public AudioClip AttackAudio;
+   
+    private BulletDomain bullet;
 
-    private BulletDomain _bulletDomain;
-
-    public void DefineZumbiById(int id) {
-        _zumbiDomain = Utils.CreateZumbi(id);
+    public static void CreateInstance(int id,Vector3 position,Quaternion rotation) {
+        Instantiate(Resources.Load<GameObject>(Utils.ZUMBI_PATH),position,rotation)
+           .GetComponent<ZumbiController>()
+           .DefineZumbiById(id);
     }
 
     public void SetBullet(BulletDomain bulletDomain) {
-        _bulletDomain = bulletDomain;
+        bullet = bulletDomain;
     }
 
+    public void DefineZumbiById(int id) {
+        zumbi = new ZumbiDomain(id);
+        transform.GetChild(zumbi.Id).gameObject.SetActive(true);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        Player = GameObject.FindWithTag(Utils.PLAYER_TAG);
-        _rigidbody = GetComponent<Rigidbody>();
-        _animator = GetComponent<Animator>();
-        _playerController = Player.GetComponent<PlayerController>();
-        transform.GetChild(_zumbiDomain.GetTypeBody()).gameObject.SetActive(true);
-
+        rigidbd = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     void FixedUpdate() {
         
         if(TakeHit()) {
-            _animator.SetBool(Utils.ON_TAKE_HIT,true);
+            animator.SetBool(Utils.ON_TAKE_HIT,true);
             return;
         }
-        _animator.SetBool(Utils.ON_TAKE_HIT,false);
-        _rigidbody.MoveRotation(Quaternion.LookRotation(Offset()));
+        animator.SetBool(Utils.ON_TAKE_HIT,false);
+        rigidbd.MoveRotation(Quaternion.LookRotation(Offset()));
 
         if(Distance() < Utils.IMPACT_DISTANCE) {
-            _animator.SetBool(Utils.ON_ATTACK,true);
+            animator.SetBool(Utils.ON_ATTACK,true);
+            AudioSourceController.AudioSourceInstance.PlayOneShot(AttackAudio);
             return;
         }
-        _animator.SetBool(Utils.ON_ATTACK,false);
-        _rigidbody.MovePosition(Moviment());
+        animator.SetBool(Utils.ON_ATTACK,false);
+        rigidbd.MovePosition(Moviment());
         
         
 
     }
 
     Vector3 Moviment() {
-        return _rigidbody.position + Offset(); 
+        return rigidbd.position + Offset(); 
     }
 
     Vector3 Offset() {
-        return (Player.transform.position - transform.position).normalized * _zumbiDomain.GetSpeed() * Time.deltaTime ;
+        return zumbi.Speed * Time.deltaTime * (PlayerController.PlayerInstance.gameObject.transform.position - transform.position).normalized ;
     }
 
     float Distance() {
-        return Vector3.Distance(transform.position, Player.transform.position);  
+        return Vector3.Distance(transform.position, PlayerController.PlayerInstance.gameObject.transform.position);  
     }
 
     void Attack() {
-      
-        _playerController.TakeHit(_zumbiDomain.GetStrength());
+
+        PlayerController.PlayerInstance.TakeHit(zumbi.Strength);
     }
 
     bool TakeHit() {
-        if(_bulletDomain == null) {
+        if(bullet == null) {
             return false;
         }
-        int hit = _bulletDomain.GetNextHit();
+        int hit = bullet.GetNextHit();
         if(hit == 0) {
             return false ;
         }
-        if(_zumbiDomain.ReduceLife(hit)) {
+        if(zumbi.ReduceLife(hit)) {
             Destroy(gameObject);
         }
         return true;
