@@ -23,11 +23,12 @@ public static class Utils {
     public const string ON_ATTACK = "OnAttack";
     public const string PLAYER_TAG = "Player";
     public const string ZUMBI_TAG = "Zumbi";
-    public const float CAMERA_DELAY = 1.3f;
+    public const float CAMERA_DELAY = 1.025f;
     public const string VERTICAL = "Vertical";
     public const string HORIZONTAL = "Horizontal";
 
     public static readonly float[] PARKING_LIMITS = new float[2] { 21f,15f };
+    
 
     public static readonly Color[] COLOR_DEFINITION = new Color[GUNPACK_SIZE] {
         new Color(0.2f,0.2f,0.8f),
