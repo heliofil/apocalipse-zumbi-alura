@@ -2,7 +2,7 @@
 
 public class BulletDomain: BasicDomain {
 
-    private static readonly int[] SPEED_BULLET_DEFINITION = new int[Utils.GUNPACK_SIZE]{25,20,25,20 };
+    private static readonly int[] SPEED_BULLET_DEFINITION = new int[Utils.GUNPACK_SIZE]{30,20,30,50 };
     private static readonly int[][] HITS_BULLET_DEFINITION = new int[Utils.GUNPACK_SIZE][] {
          new int[]{1,1,1,1},
          new int[]{ 4,2,2,1 },

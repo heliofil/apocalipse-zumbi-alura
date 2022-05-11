@@ -45,7 +45,6 @@ public class ZumbiController : MonoBehaviour{
 
         if(Distance() < Utils.IMPACT_DISTANCE) {
             animator.SetBool(Utils.ON_ATTACK,true);
-            AudioSourceController.AudioSourceInstance.PlayOneShot(AttackAudio);
             return;
         }
         animator.SetBool(Utils.ON_ATTACK,false);
@@ -81,6 +80,7 @@ public class ZumbiController : MonoBehaviour{
             return false ;
         }
         if(zumbi.ReduceLife(hit)) {
+            AudioSourceController.AudioSourceInstance.PlayOneShot(AttackAudio);
             Destroy(gameObject);
         }
         return true;

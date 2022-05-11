@@ -672,7 +672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00e37f387209a9940b3d4afae1864011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackAudio: {fileID: 8300000, guid: ceff00b1e7ba2b04dba623ce6fb9f461, type: 3}
+  AttackAudio: {fileID: 8300000, guid: 70fca7325d8eb6c4db4aabc9ed33279a, type: 3}
 --- !u!1 &6972214854879414542
 GameObject:
   m_ObjectHideFlags: 0
