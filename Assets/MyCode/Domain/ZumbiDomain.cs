@@ -1,4 +1,6 @@
-﻿public class ZumbiDomain : BasicDomain {
+﻿using UnityEngine;
+
+public class ZumbiDomain : BasicDomain {
 
     private static readonly int[,] ZUMBI_DEFINITION = new int[Utils.ZUMBI_DEFINITION_SIZE,4] {
         { 1,19,3,1 },
@@ -20,11 +22,11 @@
         get; 
     }
 
-    public ZumbiDomain(int id) : this(ZUMBI_DEFINITION[id,2],ZUMBI_DEFINITION[id,0],ZUMBI_DEFINITION[id,1],ZUMBI_DEFINITION[id,3]) {
+    public ZumbiDomain(Rigidbody rigidbody,int id) : this(rigidbody,ZUMBI_DEFINITION[id,2],ZUMBI_DEFINITION[id,0],ZUMBI_DEFINITION[id,1],ZUMBI_DEFINITION[id,3]) {
 
     }
 
-    public ZumbiDomain(int speed,int id,int life, int strength): base(speed,id,life) {
+    public ZumbiDomain(Rigidbody rigidbody,int speed,int id,int life, int strength): base(rigidbody,speed,id,life) {
         
         this.Strength = strength;
         

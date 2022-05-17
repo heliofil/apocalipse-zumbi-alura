@@ -5,7 +5,6 @@ public class ZumbiController : MonoBehaviour{
     
 
     private ZumbiDomain zumbi;
-    private Rigidbody rigidbd;
     private Animator animator;
 
     public AudioClip AttackAudio;
@@ -23,14 +22,13 @@ public class ZumbiController : MonoBehaviour{
     }
 
     public void DefineZumbiById(int id) {
-        zumbi = new ZumbiDomain(id);
+        zumbi = new ZumbiDomain(GetComponent<Rigidbody>(),id);
         transform.GetChild(zumbi.Id).gameObject.SetActive(true);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        rigidbd = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
     }
 
@@ -41,25 +39,19 @@ public class ZumbiController : MonoBehaviour{
             return;
         }
         animator.SetBool(Utils.ON_TAKE_HIT,false);
-        rigidbd.MoveRotation(Quaternion.LookRotation(Offset()));
+        zumbi.Rotation(Offset());
 
         if(Distance() < Utils.IMPACT_DISTANCE) {
             animator.SetBool(Utils.ON_ATTACK,true);
             return;
         }
         animator.SetBool(Utils.ON_ATTACK,false);
-        rigidbd.MovePosition(Moviment());
-        
-        
+        zumbi.Move(Offset()); 
 
-    }
-
-    Vector3 Moviment() {
-        return rigidbd.position + Offset(); 
     }
 
     Vector3 Offset() {
-        return zumbi.Speed * Time.deltaTime * (PlayerController.PlayerInstance.gameObject.transform.position - transform.position).normalized ;
+        return (PlayerController.PlayerInstance.gameObject.transform.position - transform.position).normalized;
     }
 
     float Distance() {

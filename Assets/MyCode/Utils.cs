@@ -17,10 +17,7 @@ public static class Utils {
     public const int TIME_TO_NEW_INIT = 850;
     public const int TIME_TO_NEW_GUN = 100;
 
-    public const string IS_GUN = "IsGun";
-    public const string ON_TAKE_HIT = "OnTakeHit";
-    public const string ON_MOVE = "OnMove";
-    public const string ON_ATTACK = "OnAttack";
+  
     public const string PLAYER_TAG = "Player";
     public const string ZUMBI_TAG = "Zumbi";
     public const float CAMERA_DELAY = 1.025f;

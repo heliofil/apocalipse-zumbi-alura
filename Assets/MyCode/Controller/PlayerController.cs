@@ -4,11 +4,8 @@ public class PlayerController : MonoBehaviour
 {
    
     private Vector3 direction;
-    private Animator animator;
-    private Rigidbody rigidbd;
+    
     private BasicDomain player;
-    private bool walk;
-
     public LayerMask BaseFloor;
     public AudioClip TakeHitAudio;
 
@@ -37,21 +34,18 @@ public class PlayerController : MonoBehaviour
     }
 
     public void HasGun() {
-        animator.SetBool(Utils.IS_GUN,true);
-        walk = true; 
+        player.EnableSlow();
     }
 
     public void NoGun() {
-        animator.SetBool(Utils.IS_GUN,false);
-        walk = false;
+        player.DisableSlow();
     }
 
     // Start is called before the first frame update
     void Awake()
     {
-        animator = GetComponent<Animator>();
-        rigidbd = GetComponent<Rigidbody>();
-        player = new BasicDomain();
+        
+        player = new BasicDomain(GetComponent<Rigidbody>());
         UIController.UIInstance.SetMaxLifeBar(player.Life);
         UIController.UIInstance.SetLifeBar(player.Life);
         
@@ -61,13 +55,16 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         
-
-        animator.SetBool(Utils.ON_MOVE, false);
+        
         direction.Set(Input.GetAxis(Utils.HORIZONTAL), 0,Input.GetAxis(Utils.VERTICAL));
 
         if(direction != Vector3.zero)
         {
-            animator.SetBool(Utils.ON_MOVE, true);
+            //animator.SetBool(Utils.ON_MOVE,true);
+            if(player.Walk) {
+               // animator.SetBool(Utils.ON_RUN,false);
+            }
+            
             
         }
     }
@@ -75,8 +72,8 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate() {
 
         if(direction != Vector3.zero) {
-            rigidbd.MovePosition(Move(direction));
-            rigidbd.MoveRotation(Quaternion.LookRotation(direction));
+            player.Move(direction);
+            player.Rotation(direction);
         }
 
 
@@ -85,18 +82,12 @@ public class PlayerController : MonoBehaviour
         if(Physics.Raycast(raio,out RaycastHit hit,100,BaseFloor)) {
             Vector3 aim = hit.point - transform.position;
             aim.y = 0;
-            rigidbd.MoveRotation(Quaternion.LookRotation(aim));
+            player.Rotation(aim);
         }
 
     }
 
-    Vector3 Move(Vector3 direction) {
-        int speed = player.Speed;
-        if(walk) {
-            speed = player.Slow();
-        }
-        return rigidbd.position + (speed * Time.deltaTime * direction);
-    }
+    
 
 
 

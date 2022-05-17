@@ -17,12 +17,12 @@ public class BulletDomain: BasicDomain {
     public Color Color { get;}
 
 
-    public BulletDomain(int id): this(SPEED_BULLET_DEFINITION[id],id,HITS_BULLET_DEFINITION[id]) {
+    public BulletDomain(Rigidbody rigidbody,int id): this(rigidbody,SPEED_BULLET_DEFINITION[id],id,HITS_BULLET_DEFINITION[id]) {
 
     }
 
 
-    public BulletDomain(int speed,int id,int[] hits): base(speed,id,Utils.BULLET_TIME_INIT) {
+    public BulletDomain(Rigidbody rigidbody,int speed,int id,int[] hits): base(rigidbody ,speed,id,Utils.BULLET_TIME_INIT) {
         this.Hits = hits;
         this.hitId = 0;
         this.Color = Utils.COLOR_DEFINITION[id];
