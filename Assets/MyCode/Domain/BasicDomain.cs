@@ -23,10 +23,6 @@ public class BasicDomain {
         get; private set;
     }
 
-    public BasicDomain(Rigidbody rigidbody):this(rigidbody,10,1,10) {
-        
-    }
-
     public BasicDomain(Rigidbody rigidbody, int speed,int id,int life) {
         Speed = speed;
         Id = id;

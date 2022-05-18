@@ -5,9 +5,10 @@ public class PlayerController : MonoBehaviour
    
     private Vector3 direction;
     
-    private BasicDomain player;
+    private PlayerDomain player;
     public LayerMask BaseFloor;
     public AudioClip TakeHitAudio;
+    private BasicAnimator basicAnimator;
 
     private static PlayerController playerInstance;
     public static PlayerController PlayerInstance {
@@ -22,6 +23,11 @@ public class PlayerController : MonoBehaviour
         }
      }
 
+    private void Start() {
+        basicAnimator = GetComponent<BasicAnimator> ();
+    }
+
+
     public void TakeHit(int hit) {
 
         AudioSourceController.AudioSourceInstance.PlayOneShot(TakeHitAudio);
@@ -34,6 +40,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void HasGun() {
+        basicAnimator.OnMove();
         player.EnableSlow();
     }
 
@@ -45,7 +52,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         
-        player = new BasicDomain(GetComponent<Rigidbody>());
+        player = new PlayerDomain(GetComponent<Rigidbody>());
         UIController.UIInstance.SetMaxLifeBar(player.Life);
         UIController.UIInstance.SetLifeBar(player.Life);
         
@@ -54,19 +61,22 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        
+       
         direction.Set(Input.GetAxis(Utils.HORIZONTAL), 0,Input.GetAxis(Utils.VERTICAL));
 
-        if(direction != Vector3.zero)
-        {
-            //animator.SetBool(Utils.ON_MOVE,true);
-            if(player.Walk) {
-               // animator.SetBool(Utils.ON_RUN,false);
-            }
-            
-            
+        if(player.Walk) { 
+            return; 
+         }
+
+        if((direction == Vector3.zero)) {
+            basicAnimator.OnIdle();
+            return;
+
         }
+
+        basicAnimator.OnRun();
+
+
     }
 
     void FixedUpdate() {
@@ -76,20 +86,9 @@ public class PlayerController : MonoBehaviour
             player.Rotation(direction);
         }
 
+        player.Rotation(BaseFloor);
 
-        Ray raio = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if(Physics.Raycast(raio,out RaycastHit hit,100,BaseFloor)) {
-            Vector3 aim = hit.point - transform.position;
-            aim.y = 0;
-            player.Rotation(aim);
-        }
 
     }
-
-    
-
-
-
 
 }

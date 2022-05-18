@@ -5,17 +5,21 @@ public class ZumbiController : MonoBehaviour{
     
 
     private ZumbiDomain zumbi;
-    private Animator animator;
-
     public AudioClip AttackAudio;
-   
     private BulletDomain bullet;
+    private BasicAnimator basicAnimator;
+
+
+    private void Start() {
+        basicAnimator = GetComponent<BasicAnimator>();
+    }
 
     public static void CreateInstance(int id,Vector3 position,Quaternion rotation) {
         Instantiate(Resources.Load<GameObject>(Utils.ZUMBI_PATH),position,rotation)
            .GetComponent<ZumbiController>()
            .DefineZumbiById(id);
     }
+
 
     public void SetBullet(BulletDomain bulletDomain) {
         bullet = bulletDomain;
@@ -26,35 +30,29 @@ public class ZumbiController : MonoBehaviour{
         transform.GetChild(zumbi.Id).gameObject.SetActive(true);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        animator = GetComponent<Animator>();
-    }
-
     void FixedUpdate() {
         
         if(TakeHit()) {
-            animator.SetBool(Utils.ON_TAKE_HIT,true);
+            basicAnimator.OnTakeHit(true);
             return;
         }
-        animator.SetBool(Utils.ON_TAKE_HIT,false);
-        zumbi.Rotation(Offset());
+        basicAnimator.OnTakeHit(false);
+        zumbi.Rotation(OffsetPlayer());
 
-        if(Distance() < Utils.IMPACT_DISTANCE) {
-            animator.SetBool(Utils.ON_ATTACK,true);
+        if(DistancePlayer() < Utils.IMPACT_DISTANCE) {
+            basicAnimator.OnAttack(true);
             return;
         }
-        animator.SetBool(Utils.ON_ATTACK,false);
-        zumbi.Move(Offset()); 
+        basicAnimator.OnAttack(false);
+        zumbi.Move(OffsetPlayer()); 
 
     }
 
-    Vector3 Offset() {
+    Vector3 OffsetPlayer() {
         return (PlayerController.PlayerInstance.gameObject.transform.position - transform.position).normalized;
     }
 
-    float Distance() {
+    float DistancePlayer() {
         return Vector3.Distance(transform.position, PlayerController.PlayerInstance.gameObject.transform.position);  
     }
 
