@@ -4,10 +4,10 @@ public class BulletDomain: BasicDomain {
 
     private static readonly int[] SPEED_BULLET_DEFINITION = new int[Utils.GUNPACK_SIZE]{30,20,30,50 };
     private static readonly int[][] HITS_BULLET_DEFINITION = new int[Utils.GUNPACK_SIZE][] {
-         new int[]{1,1,1,1},
-         new int[]{ 4,2,2,1 },
-         new int[]{ 4,4,4,4 },
-         new int[]{ 3,2,3,3 }
+         new int[]{4,0,0,0},
+         new int[]{ 3,2,1,0 },
+         new int[]{ 4,4,2,2 },
+         new int[]{ 3,2,2,3 }
     };
 
 

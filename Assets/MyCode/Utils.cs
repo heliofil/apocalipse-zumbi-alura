@@ -4,7 +4,10 @@ public static class Utils {
     public const string GUNPACK_TAG = "GunPack";
     public const int GUNPACK_SIZE = 4;
     public const int ZUMBI_DEFINITION_SIZE = 13;
-    public const float IMPACT_DISTANCE = 2.2f;
+    public const float IDLE_DISTANCE = 22f;
+    public const float MOVE_DISTANCE = 10f;
+    public const float SEEK_DISTANCE = 7f;
+    public const float IMPACT_DISTANCE = 2f;
     public const int BULLET_TIME_INIT = 150;
     public const string BUTTON_FIRE = "Fire1";
     public const int ZUMBI_MAX = 75;
@@ -24,7 +27,7 @@ public static class Utils {
     public const string VERTICAL = "Vertical";
     public const string HORIZONTAL = "Horizontal";
 
-    public static readonly float[] PARKING_LIMITS = new float[2] { 21f,15f };
+    public static readonly float SPHERE_LIMITS = 20f ;
     
 
     public static readonly Color[] COLOR_DEFINITION = new Color[GUNPACK_SIZE] {
@@ -39,15 +42,10 @@ public static class Utils {
     }
 
     public static Vector3 GetRandomPosition() {
-       
-        float min = Utils.PARKING_LIMITS[0] * -1;
-        float max = Utils.PARKING_LIMITS[0];
-        float x = Random.Range(min,max);
-        min = Utils.PARKING_LIMITS[1] * -1;
-        max = Utils.PARKING_LIMITS[1];
-        float z = Random.Range(min,max);
 
-        return new Vector3(x,IMPACT_DISTANCE,z);
+        Vector3 position = Random.insideUnitSphere * SPHERE_LIMITS;
+        position.y = IMPACT_DISTANCE;
+        return position;
 
 
     }

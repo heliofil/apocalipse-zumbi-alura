@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour, ILivingController {
    
     private Vector3 direction;
     
@@ -31,12 +30,15 @@ public class PlayerController : MonoBehaviour
     public void TakeHit(int hit) {
 
         AudioSourceController.AudioSourceInstance.PlayOneShot(TakeHitAudio);
-
         if(player.ReduceLife(hit)) {
-            UIController.UIInstance.GameOver();
+          ToDie();
         };
         UIController.UIInstance.SetLifeBar(player.Life);
 
+    }
+
+    public void ToDie() {
+        UIController.UIInstance.GameOver();
     }
 
     public void HasGun() {
@@ -73,7 +75,6 @@ public class PlayerController : MonoBehaviour
             return;
 
         }
-
         basicAnimator.OnRun();
 
 

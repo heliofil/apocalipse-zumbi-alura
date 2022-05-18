@@ -2,7 +2,10 @@
 
 public class BasicDomain {
 
-    
+    public int InitialLife {
+        get; private set;
+    }
+
     public int Life {
         get; private set;
     }
@@ -23,11 +26,13 @@ public class BasicDomain {
         get; private set;
     }
 
+
     public BasicDomain(Rigidbody rigidbody, int speed,int id,int life) {
         Speed = speed;
         Id = id;
         Life = life;
-        
+        InitialLife = life;
+
         Rigidbody = rigidbody;
         Walk = false;
     }
