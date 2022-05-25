@@ -6,8 +6,10 @@ public class AudioSourceController : MonoBehaviour
 {
     
     private AudioSource audioSource;
-    public static AudioSource AudioSourceInstance;
-    
+    public static AudioSource AudioSourceInstance {
+        get; private set;
+    }
+
     // Start is called before the first frame update
     void Awake()
     {

@@ -10,6 +10,10 @@ public class BasicDomain {
         get; private set;
     }
 
+    public string Name {
+        get; private set;
+    }
+
     public int Speed {
         get; private set;
     }
@@ -27,11 +31,12 @@ public class BasicDomain {
     }
 
 
-    public BasicDomain(Rigidbody rigidbody, int speed,int id,int life) {
+    public BasicDomain(Rigidbody rigidbody,int id,string name, int life,int speed) {
         Speed = speed;
         Id = id;
         Life = life;
         InitialLife = life;
+        Name = name;
 
         Rigidbody = rigidbody;
         Walk = false;
@@ -45,6 +50,7 @@ public class BasicDomain {
 
     public bool ReduceLife(int reduce) {
         Life -= reduce;
+        
         if(Life < 1) {
             return true;
         }

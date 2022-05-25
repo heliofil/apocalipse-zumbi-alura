@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
 public class BulletDomain: BasicDomain {
-
-    private static readonly int[] SPEED_BULLET_DEFINITION = new int[Utils.GUNPACK_SIZE]{30,20,30,50 };
+    private const string BULLET_NAME = "Bullet";
+    private static readonly int[] SPEED_BULLET_DEFINITION = new int[Utils.GUNPACK_SIZE]{40,30,50,30 };
     private static readonly int[][] HITS_BULLET_DEFINITION = new int[Utils.GUNPACK_SIZE][] {
          new int[]{4,0,0,0},
          new int[]{ 3,2,1,0 },
-         new int[]{ 4,4,2,2 },
-         new int[]{ 3,2,2,3 }
+         new int[]{ 10,0,0,0 },
+         new int[]{ 3,2,4,1 }
     };
 
 
@@ -17,12 +17,12 @@ public class BulletDomain: BasicDomain {
     public Color Color { get;}
 
 
-    public BulletDomain(Rigidbody rigidbody,int id): this(rigidbody,SPEED_BULLET_DEFINITION[id],id,HITS_BULLET_DEFINITION[id]) {
+    public BulletDomain(Rigidbody rigidbody,int id): this(rigidbody,id,BULLET_NAME,SPEED_BULLET_DEFINITION[id],HITS_BULLET_DEFINITION[id]) {
 
     }
 
 
-    public BulletDomain(Rigidbody rigidbody,int speed,int id,int[] hits): base(rigidbody ,speed,id,Utils.BULLET_TIME_INIT) {
+    public BulletDomain(Rigidbody rigidbody,int id,string name,int speed,int[] hits): base(rigidbody,id,name,Utils.BULLET_TIME_INIT,speed) {
         this.Hits = hits;
         this.hitId = 0;
         this.Color = Utils.COLOR_DEFINITION[id];
@@ -34,6 +34,7 @@ public class BulletDomain: BasicDomain {
             hit = Hits[hitId];
             hitId++;
         }
+       
         return hit;
     }
 

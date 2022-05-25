@@ -1,20 +1,22 @@
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, ILivingController {
-   
+
+    public AudioClip TakeHitAudio;
+
     private Vector3 direction;
     
     private PlayerDomain player;
-    public LayerMask BaseFloor;
-    public AudioClip TakeHitAudio;
+    private LayerMask baseFloor;
     private BasicAnimator basicAnimator;
-
+    private UIController uiInstance;
+    
     private static PlayerController playerInstance;
     public static PlayerController PlayerInstance {
         get {
 
             if(!playerInstance) {
-                playerInstance = GameObject.FindWithTag(Utils.PLAYER_TAG).GetComponent < PlayerController > ();
+                playerInstance = GameObject.FindWithTag(Utils.PLAYER_TAG).GetComponent<PlayerController>();
             }
             
             return playerInstance;
@@ -22,23 +24,31 @@ public class PlayerController : MonoBehaviour, ILivingController {
         }
      }
 
-    private void Start() {
-        basicAnimator = GetComponent<BasicAnimator> ();
+    public bool IsPlayerNear(Vector3 position,float reference) {
+        if(DistancePlayer(position) < reference) {
+            return true;
+        }
+        return false;
+    
     }
 
+    public float DistancePlayer(Vector3 position) {
+        return Vector3.Distance(position,transform.position);
+    }
 
+   
     public void TakeHit(int hit) {
 
         AudioSourceController.AudioSourceInstance.PlayOneShot(TakeHitAudio);
         if(player.ReduceLife(hit)) {
           ToDie();
         };
-        UIController.UIInstance.SetLifeBar(player.Life);
+        uiInstance.SetLifeBar(player.Life);
 
     }
 
     public void ToDie() {
-        UIController.UIInstance.GameOver();
+        uiInstance.GameOver();
     }
 
     public void HasGun() {
@@ -50,13 +60,14 @@ public class PlayerController : MonoBehaviour, ILivingController {
         player.DisableSlow();
     }
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        
+    
+    void Start() {
         player = new PlayerDomain(GetComponent<Rigidbody>());
-        UIController.UIInstance.SetMaxLifeBar(player.Life);
-        UIController.UIInstance.SetLifeBar(player.Life);
+        uiInstance = UIController.UIInstance;
+        uiInstance.SetMaxLifeBar(player.Life);
+        uiInstance.SetLifeBar(player.Life);
+        baseFloor = LayerMask.GetMask(Utils.BASE_FLOOR_TAG);
+        basicAnimator = GetComponent<BasicAnimator>();
         
     }
 
@@ -87,9 +98,10 @@ public class PlayerController : MonoBehaviour, ILivingController {
             player.Rotation(direction);
         }
 
-        player.Rotation(BaseFloor);
+        player.Rotation(baseFloor);
 
 
     }
+
 
 }

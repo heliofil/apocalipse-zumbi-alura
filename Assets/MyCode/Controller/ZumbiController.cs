@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ZumbiController : MonoBehaviour, ILivingController {
@@ -9,15 +10,21 @@ public class ZumbiController : MonoBehaviour, ILivingController {
     private BulletDomain bullet;
     private BasicAnimator basicAnimator;
     private Vector3 offsetInstance;
-    
+    private UIController uiInstance;
+    private PlayerController playerInstance;
 
-    private void Start() {
+
+    void Start() {
         basicAnimator = GetComponent<BasicAnimator>();
-        offsetInstance = Vector3.zero;
+        offsetInstance = Utils.GetRandomByPosition(transform.position,Utils.SEEK_DISTANCE);
+        uiInstance = UIController.UIInstance;
+        playerInstance = PlayerController.PlayerInstance;
     }
 
     public static void CreateInstance(int id,Vector3 position,Quaternion rotation) {
-        Instantiate(Resources.Load<GameObject>(Utils.ZUMBI_PATH),position,rotation)
+        Instantiate(Resources.Load<GameObject>(Utils.ZUMBI_PATH),
+            Utils.GetRandomByPosition(position,Utils.IMPACT_DISTANCE)
+            ,rotation)
            .GetComponent<ZumbiController>()
            .DefineZumbiById(id);
     }
@@ -32,109 +39,80 @@ public class ZumbiController : MonoBehaviour, ILivingController {
         transform.GetChild(zumbi.Id).gameObject.SetActive(true);
     }
 
-    void FixedUpdate() {
+    void Update() {
         
-        if(WhileTakeHit()) {
+        if(bullet != null) {
+            StartCoroutine(GetNextHit(bullet));
+            bullet = null;
             return;
         }
+
+
         basicAnimator.OnTakeHit(false); 
+
+        if(playerInstance.IsPlayerNear(transform.position,Utils.IMPACT_DISTANCE)) {
+            zumbi.Rotation(OffsetPlayer());
+            basicAnimator.OnAttack(true);
+            return;
+        }
+        
         basicAnimator.OnAttack(false);
-
-        if(IsIdleDistance()) {
-            return;
-        }
-
-        if(IsMoveDistance()) {
-            zumbi.Move(OffsetRandom());
-            zumbi.Rotation(OffsetRandom());
-            return;
-        }
-
-        if(IsSeekDistance()) {
-            IsAttackDistance();
+        
+        if(playerInstance.IsPlayerNear(transform.position,Utils.SEEK_DISTANCE)) {
+            zumbi.DisableSlow();
+            basicAnimator.OnMove();
             zumbi.Move(OffsetPlayer());
             zumbi.Rotation(OffsetPlayer());
-            return; 
+            return ;
         }
         
-        
+        if(playerInstance.IsPlayerNear(transform.position,Utils.MOVE_DISTANCE)) {
+            basicAnimator.OnMove();
+            zumbi.EnableSlow();
+            zumbi.Move(OffsetRandom());
+            zumbi.Rotation(OffsetRandom());
+            return ;
+        }
+
+        basicAnimator.OnIdle();
+
 
     }
 
     Vector3 OffsetRandom() {
-        Debug.Log(Vector3.Distance(transform.position,offsetInstance));
-        if((offsetInstance == Vector3.zero)||(Vector3.Distance(transform.position,offsetInstance) < Utils.IMPACT_DISTANCE)) {
-            Vector3 position = Utils.GetRandomPosition() + transform.position;
-            position.y = transform.position.y;
-            offsetInstance = (position - transform.position).normalized;
-            Debug.Log("gerou aleatorio");
+        if(Vector3.Distance(transform.position,offsetInstance) < Utils.IMPACT_DISTANCE) {
+            offsetInstance = Utils.GetRandomByPosition(transform.position,Utils.SEEK_DISTANCE);
         }
 
-        return offsetInstance;
+        return (offsetInstance - transform.position).normalized;
         
     }
 
     Vector3 OffsetPlayer() {
-        return (PlayerController.PlayerInstance.gameObject.transform.position - transform.position).normalized;
-    }
-
-    float DistancePlayer() {
-        return Vector3.Distance(transform.position, PlayerController.PlayerInstance.gameObject.transform.position);  
-    }
-
-    bool IsIdleDistance() {
-        if(DistancePlayer() > Utils.IDLE_DISTANCE) {
-            basicAnimator.OnIdle();
-            return true;
-        }
-        return false;
-    }
-
-    bool IsMoveDistance() {
-        if(DistancePlayer() > Utils.MOVE_DISTANCE) {
-            basicAnimator.OnMove();
-            zumbi.EnableSlow();
-            return true;
-        }
-        return false;
-    }
-
-    bool IsSeekDistance() {
-        if(DistancePlayer() < Utils.SEEK_DISTANCE) {
-            zumbi.DisableSlow();
-            basicAnimator.OnMove();
-            return true;
-        }
-        return false;
-    }
-
-    bool IsAttackDistance() {
-        if(DistancePlayer() < Utils.IMPACT_DISTANCE) {
-            basicAnimator.OnAttack(true);
-            return true;
-        }
-        return false;
+        return (playerInstance.gameObject.transform.position - transform.position).normalized;
     }
 
     void Attack() {
-
-        PlayerController.PlayerInstance.TakeHit(zumbi.Strength);
+        playerInstance.TakeHit(zumbi.Strength);
     }
 
-    private bool WhileTakeHit() {
-        if(bullet == null) {
-            return false;
-        }
+    IEnumerator GetNextHit(BulletDomain bullet) {
         int hit = bullet.GetNextHit();
-        if(hit == 0) {
-            return false ;
+        while(hit != 0) {
+            TakeHit(hit);
+            uiInstance.SetZumbiBar(zumbi.Life);
+            hit = bullet.GetNextHit();
+            yield return new WaitForSeconds(1f);
         }
-        TakeHit(hit);
-        return true;
-         
+        uiInstance.HideZumbi();
     }
+
+    
+
 
     public void TakeHit(int hit) {
+        uiInstance.InitHitZumbi(zumbi);
+       
         if(zumbi.ReduceLife(hit)) {
             ToDie();
         }
@@ -144,6 +122,7 @@ public class ZumbiController : MonoBehaviour, ILivingController {
 
     public void ToDie() {
         AudioSourceController.AudioSourceInstance.PlayOneShot(AttackAudio);
+        uiInstance.HideZumbi();
         Destroy(gameObject);
     }
 

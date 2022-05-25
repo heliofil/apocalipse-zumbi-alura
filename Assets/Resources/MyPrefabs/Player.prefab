@@ -287,9 +287,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeae445f20720fd4d918860fab3be6c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseFloor:
-    serializedVersion: 2
-    m_Bits: 8
   TakeHitAudio: {fileID: 8300000, guid: 798f5778a947580449a0b595c76938b2, type: 3}
 --- !u!114 &101385778021148828
 MonoBehaviour:
@@ -3117,19 +3114,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5773939516790387077, guid: c326f84dc80c6bb4682cef2b77169e99, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.7064338
       objectReference: {fileID: 0}
     - target: {fileID: 5773939516790387077, guid: c326f84dc80c6bb4682cef2b77169e99, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.030843573
       objectReference: {fileID: 0}
     - target: {fileID: 5773939516790387077, guid: c326f84dc80c6bb4682cef2b77169e99, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0.7064338
       objectReference: {fileID: 0}
     - target: {fileID: 5773939516790387077, guid: c326f84dc80c6bb4682cef2b77169e99, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.030843573
       objectReference: {fileID: 0}
     - target: {fileID: 5773939516790387077, guid: c326f84dc80c6bb4682cef2b77169e99, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3141,7 +3138,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5773939516790387077, guid: c326f84dc80c6bb4682cef2b77169e99, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8901837898624187476, guid: c326f84dc80c6bb4682cef2b77169e99, type: 3}
       propertyPath: m_IsActive

@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 
 public class PlayerDomain:BasicDomain {
+    
+    private const string PLAYER_NAME = "Bob";
 
-    public PlayerDomain(Rigidbody rigidbody) : base(rigidbody,10,1,10) {
+    public PlayerDomain(Rigidbody rigidbody) : base(rigidbody,1,PLAYER_NAME,10,10) {
 
     }
 

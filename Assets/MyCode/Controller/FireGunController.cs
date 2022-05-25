@@ -7,15 +7,17 @@ public class FireGunController : MonoBehaviour
     public AudioClip ShootAudio;
     private int munition;
     private int bulletType;
+    private UIController uiInstance;
+    private PlayerController playerInstance;
     
     public void SetMunition(int munition) {
         this.munition = munition;
-        UIController.UIInstance.SetBulletText(this.munition);
+        uiInstance.SetBulletText(this.munition);
     }
 
     public void MunitionZero() {
         SetMunition(0);
-        PlayerController.PlayerInstance.NoGun();
+        playerInstance.NoGun();
         transform.GetChild(0).GetChild(bulletType).gameObject.SetActive(false);
     }
 
@@ -23,10 +25,17 @@ public class FireGunController : MonoBehaviour
         int rad = Random.Range(6,12) * Utils.GUNPACK_SIZE - bulletType;
         SetMunition(rad);
         this.bulletType = bulletType;
-        UIController.UIInstance.SetBulletColor(Utils.COLOR_DEFINITION[bulletType]);
-        transform.GetChild(0).GetChild(bulletType).gameObject.SetActive(true);   
-        PlayerController.PlayerInstance.HasGun();
+        uiInstance.SetBulletColor(Utils.COLOR_DEFINITION[bulletType]);
+        transform.GetChild(0).GetChild(bulletType).gameObject.SetActive(true);
+        playerInstance.HasGun();
         
+    }
+
+    void Start() {
+
+        uiInstance = UIController.UIInstance;
+        playerInstance = PlayerController.PlayerInstance;
+
     }
 
     // Update is called once per frame

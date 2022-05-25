@@ -4,11 +4,11 @@ public class GunPackController:MonoBehaviour {
     
     private int bulletType;
 
-    public static void CreateInstanceById(int id) {
+    public static void CreateInstance(int id,Vector3 position) {
         GunPackController newGunPack = Instantiate(Resources.Load<GameObject>(Utils.GUNPACK_PATH))
             .GetComponent<GunPackController>();
         newGunPack.bulletType = id;
-        newGunPack.transform.position = Utils.GetRandomPosition();
+        newGunPack.transform.position = position;
         newGunPack.transform.GetChild(0).GetChild(id).gameObject.SetActive(true);
     }
 
