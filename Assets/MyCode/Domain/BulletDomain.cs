@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BulletDomain: BasicDomain {
+public class BulletDomain: BasicMovesDomain {
     private const string BULLET_NAME = "Bullet";
     private static readonly int[] SPEED_BULLET_DEFINITION = new int[Utils.GUNPACK_SIZE]{40,30,50,30 };
     private static readonly int[][] HITS_BULLET_DEFINITION = new int[Utils.GUNPACK_SIZE][] {

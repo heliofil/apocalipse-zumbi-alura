@@ -60,7 +60,16 @@ public class PlayerController : MonoBehaviour, ILivingController {
         player.DisableSlow();
     }
 
-    
+    public void Restore() {
+        player.RestoreLife();
+        uiInstance.SetLifeBar(player.Life);
+    }
+
+    public void LightOn() {
+        transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+    }
+
+
     void Start() {
         player = new PlayerDomain(GetComponent<Rigidbody>());
         uiInstance = UIController.UIInstance;
@@ -91,6 +100,7 @@ public class PlayerController : MonoBehaviour, ILivingController {
 
     }
 
+
     void FixedUpdate() {
 
         if(direction != Vector3.zero) {
@@ -100,8 +110,8 @@ public class PlayerController : MonoBehaviour, ILivingController {
 
         player.Rotation(baseFloor);
 
-
     }
+
 
 
 }

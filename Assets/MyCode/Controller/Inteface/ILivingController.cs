@@ -6,4 +6,6 @@
 
     void ToDie();
 
+    void Restore();
+
      }

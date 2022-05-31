@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{8F4691F4-21F5-4030-F047-FBDCF495AE7D}</ProjectGuid>
+    <ProjectGuid>{0FA022DB-DB44-94CB-B484-32EEC9BDDE88}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Unity.Services.Core.Analytics</AssemblyName>
@@ -714,7 +714,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Unity.Services.Core.csproj">
-      <Project>{F1EE91BE-8048-575D-18F1-CDD70CEBC3BB}</Project>
+      <Project>{492924EA-3225-08C3-49DF-AD03DC0FCCB3}</Project>
       <Name>Unity.Services.Core</Name>
     </ProjectReference>
   </ItemGroup>

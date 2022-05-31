@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{B8612E24-9051-C5B0-F8DB-7C3D3BF901DB}</ProjectGuid>
+    <ProjectGuid>{28BBA9C8-DEB4-3DCF-DCFA-4A7236070067}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -69,6 +69,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\MyCode\Utils.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
+    <Compile Include="Assets\MyCode\Controller\PickUpController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\MyCode\Controller\ZumbiGeneratorContoller.cs" />
     <Compile Include="Assets\MyCode\Controller\FireGunController.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Assets\MyCode\Animator\BasicAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
+    <Compile Include="Assets\MyCode\Domain\BasicMovesDomain.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\MyCode\Controller\PlayerController.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
+    <Compile Include="Assets\MyCode\Domain\PickUpsDomain.cs" />
     <Compile Include="Assets\MyCode\Controller\AudioSourceController.cs" />
     <Compile Include="Assets\MyCode\Controller\GunPackController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
@@ -765,79 +768,79 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Unity.VisualScripting.Flow.Editor.csproj">
-      <Project>{A3C60F00-751F-9F8A-29C3-40131411FD16}</Project>
+      <Project>{992138FD-7D68-AC49-5896-BCC5D81DBF29}</Project>
       <Name>Unity.VisualScripting.Flow.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VSCode.Editor.csproj">
-      <Project>{A18068E8-EABD-E5FE-5DF5-652A3B915507}</Project>
+      <Project>{C84FB3ED-C72D-A1D3-2BB9-7B472316CDB4}</Project>
       <Name>Unity.VSCode.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.Editor.csproj">
-      <Project>{E087CAEC-A566-386C-7A08-A4029EB36B87}</Project>
+      <Project>{42AF865E-FB83-B62F-5EAD-6D1AC4F024A6}</Project>
       <Name>Unity.TextMeshPro.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualStudio.Editor.csproj">
-      <Project>{A45824F3-A4B1-DAF3-1E6E-6142C8E5B0DB}</Project>
+      <Project>{7D8AF279-4E2B-D4E3-F5E9-2E84056456A3}</Project>
       <Name>Unity.VisualStudio.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Timeline.csproj">
-      <Project>{A79E6823-A292-6C3D-0E8D-763CE4C08AEB}</Project>
+      <Project>{EBF39011-E951-63D4-616B-60596203CDC1}</Project>
       <Name>Unity.Timeline</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.Core.Editor.csproj">
-      <Project>{9ADEF6E3-716C-2833-A720-7D9C017F66EC}</Project>
+      <Project>{0A1EE610-74A9-DD64-3FE2-83204499FFF7}</Project>
       <Name>Unity.VisualScripting.Core.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.csproj">
-      <Project>{E292D053-2EEF-41E6-9CE7-B8E9C71197E5}</Project>
+      <Project>{932A1536-D73B-3923-B211-940F2556035C}</Project>
       <Name>Unity.TextMeshPro</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.State.Editor.csproj">
-      <Project>{D3200B31-A56E-6822-2B0F-9181B7551189}</Project>
+      <Project>{AC174F01-D47A-3065-097C-C43C93989A9E}</Project>
       <Name>Unity.VisualScripting.State.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.SettingsProvider.Editor.csproj">
-      <Project>{CF1D56DE-FC21-2DA6-39EA-F2D22AAD4619}</Project>
+      <Project>{8B386338-BBAB-DA24-1808-26CF6ACA2258}</Project>
       <Name>Unity.VisualScripting.SettingsProvider.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.Flow.csproj">
-      <Project>{C22D687F-85C4-2119-90E3-BDD422172A79}</Project>
+      <Project>{C061C7AF-39C9-0B68-CA18-0B7D78263C58}</Project>
       <Name>Unity.VisualScripting.Flow</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.PlasticSCM.Editor.csproj">
-      <Project>{287687B7-1D04-9E0F-B450-31AEC7F4E08A}</Project>
+      <Project>{779E20B9-3535-17F2-8BBC-65007148B21C}</Project>
       <Name>Unity.PlasticSCM.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Rider.Editor.csproj">
-      <Project>{BAD5E87C-6EAB-23F7-0C19-13156DD47C69}</Project>
+      <Project>{13A4466F-F28B-BFB6-BE6D-A6974BA50E82}</Project>
       <Name>Unity.Rider.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Services.Core.csproj">
-      <Project>{F1EE91BE-8048-575D-18F1-CDD70CEBC3BB}</Project>
+      <Project>{492924EA-3225-08C3-49DF-AD03DC0FCCB3}</Project>
       <Name>Unity.Services.Core</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.Core.csproj">
-      <Project>{F6761CD9-3353-1612-6042-45E1357338D1}</Project>
+      <Project>{7018B247-CB38-17AA-D2F0-C7A7840F8FA0}</Project>
       <Name>Unity.VisualScripting.Core</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Services.Core.Analytics.csproj">
-      <Project>{8F4691F4-21F5-4030-F047-FBDCF495AE7D}</Project>
+      <Project>{0FA022DB-DB44-94CB-B484-32EEC9BDDE88}</Project>
       <Name>Unity.Services.Core.Analytics</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.Shared.Editor.csproj">
-      <Project>{E9B7D7A4-5519-1F5F-F196-BD73CFD44D09}</Project>
+      <Project>{58DACC59-D004-4F90-2E96-D6881BFF2630}</Project>
       <Name>Unity.VisualScripting.Shared.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Services.Core.Environments.csproj">
-      <Project>{7763DF4A-D27D-D9B4-27FC-C09B9C12CA60}</Project>
+      <Project>{FC3CE096-89E5-F4DC-4129-4A7C8CDBF825}</Project>
       <Name>Unity.Services.Core.Environments</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Timeline.Editor.csproj">
-      <Project>{1E29A851-44DF-9DC8-B0DC-F9B5655E8443}</Project>
+      <Project>{CE3188D0-0806-7E52-DCCB-1734A3555F96}</Project>
       <Name>Unity.Timeline.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.State.csproj">
-      <Project>{6E2F4FF3-CB63-71AE-B917-AF872574AEE9}</Project>
+      <Project>{AC833D43-D37C-E494-5DC4-8B1050C1FAA3}</Project>
       <Name>Unity.VisualScripting.State</Name>
     </ProjectReference>
   </ItemGroup>

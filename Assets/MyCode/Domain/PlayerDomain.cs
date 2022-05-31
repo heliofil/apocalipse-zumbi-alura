@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerDomain:BasicDomain {
+public class PlayerDomain:BasicMovesDomain {
     
     private const string PLAYER_NAME = "Bob";
 

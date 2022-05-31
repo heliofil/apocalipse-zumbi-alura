@@ -122,8 +122,28 @@ public class ZumbiController : MonoBehaviour, ILivingController {
 
     public void ToDie() {
         AudioSourceController.AudioSourceInstance.PlayOneShot(AttackAudio);
+        GivePickUps();
+        uiInstance.SetScore(zumbi.Points);
         uiInstance.HideZumbi();
         Destroy(gameObject);
+    }
+
+    public void Restore() {
+        zumbi.RestoreLife();
+    }
+
+    private void GivePickUps() {
+
+        float verify = Random.value;
+
+        for(int i=0;i <Utils.PICKUPS_SHOWOFF.Length;i++) {   
+            if(verify <= Utils.PICKUPS_SHOWOFF[i]) {
+                PickUpController.CreateInstance(i,transform.position,transform.rotation);
+                break;
+            }
+            
+        }
+
     }
 
 }

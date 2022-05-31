@@ -14,40 +14,29 @@ public class BasicDomain {
         get; private set;
     }
 
-    public int Speed {
-        get; private set;
-    }
-
     public int Id {
         get; private set;
     }
 
-    public Rigidbody Rigidbody {
-        get; private set;
-    }
 
-    public bool Walk {
-        get; private set;
-    }
-
-
-    public BasicDomain(Rigidbody rigidbody,int id,string name, int life,int speed) {
-        Speed = speed;
+    public BasicDomain(int id,string name, int life) {
         Id = id;
         Life = life;
         InitialLife = life;
         Name = name;
-
-        Rigidbody = rigidbody;
-        Walk = false;
-    }
-    public void EnableSlow() {
-        Walk = true;
-    }
-    public void DisableSlow() {
-        Walk = false;
     }
 
+
+    public void RestoreLife() {
+
+        int RestoreLife = InitialLife - Life;
+        if(RestoreLife < 1) {
+            return;
+        }
+
+        Life += RestoreLife / 2;
+
+    }
     public bool ReduceLife(int reduce) {
         Life -= reduce;
         
@@ -56,28 +45,5 @@ public class BasicDomain {
         }
         return false;
     }
-
-    public void Move(Vector3 direction) {
-            int speed = Speed;
-            if(Walk) {
-                speed = Speed - (Speed / 3);
-            }
-
-        Rigidbody.MovePosition(
-            Rigidbody.position + (speed * Time.deltaTime * direction)
-            );
-    }
-
-    public void Rotation(Vector3 direction) {
-        Rigidbody.MoveRotation(
-            Quaternion.LookRotation(
-                direction
-                )
-            );
-    }
-
-
-
-
 
 }

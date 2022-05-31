@@ -6,6 +6,7 @@ public class ZumbiGeneratorContoller : MonoBehaviour, IGeneratorController
     private int timeToNew;
     private LayerMask zumbiLayerMask;
     private string[] noContact = { Utils.SCENE_OBJECT_TAG,Utils.ZUMBI_TAG };
+ 
 
     private void Start() {
         timeToNew = Utils.GetTimeToNew(3);
@@ -17,11 +18,11 @@ public class ZumbiGeneratorContoller : MonoBehaviour, IGeneratorController
 
         timeToNew--;
 
-        if(timeToNew > 0) {
+        if(GameObject.FindGameObjectsWithTag(Utils.ZUMBI_TAG).Length > Utils.ZUMBI_MAX) {
             return;
         }
 
-        if(GameObject.FindGameObjectsWithTag(Utils.ZUMBI_TAG).Length > Utils.ZUMBI_MAX) {
+        if(timeToNew > 0) {
             return;
         }
 
@@ -54,4 +55,7 @@ public class ZumbiGeneratorContoller : MonoBehaviour, IGeneratorController
         ZumbiController.CreateInstance(rad,position,transform.rotation);
         SetTimeToNew(Utils.GetTimeToNew(rad));
     }
+
+
+
 }

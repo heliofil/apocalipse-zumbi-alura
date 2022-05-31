@@ -11,11 +11,10 @@ public class UIController : MonoBehaviour
     private Slider _sliderZumbi;
     private TextMeshProUGUI _zumbiText;
     private TextMeshProUGUI _bulletText;
-   
-    
-
+    private TextMeshProUGUI _scoreText;
     private static UIController uIInstance;
     private Image _zumbiImg;
+    private int _scorePoints;
 
     public static UIController UIInstance {
         get {
@@ -28,9 +27,15 @@ public class UIController : MonoBehaviour
 }
 
 
+    public void SetScore(int points) {
+        _scorePoints += points;
+        _scoreText.text = _scorePoints.ToString();
+    }
+
     public void SetLifeBar(int lifeBar) {
         _sliderPlayer.value = lifeBar;
     }
+
 
     public void SetBulletColor(Color color) {
         _bulletText.color = color;
@@ -55,15 +60,30 @@ public class UIController : MonoBehaviour
         return GetTimeText(Utils.SURVIVE_TIME_BEST_TEXT,surviveTime);
     }
 
+    private string GetScoreTimeBestText(int score) {
+        int scoreBest = PlayerPrefs.GetInt(Utils.SCORE_TAG);
+        if(scoreBest < score) {
+            scoreBest = score;
+            PlayerPrefs.SetInt(Utils.SCORE_TAG,scoreBest);
+        }
+        return string.Format(Utils.SCORE_BEST_TEXT,scoreBest);
+    }
+
 
     public void GameOver() {
         HideZumbi();
         float gameOverTime = Time.timeSinceLevelLoad;
+        
         transform.GetChild(0).gameObject.SetActive(true);
         transform.GetChild(0).GetChild(0).GetChild(1)
-            .GetComponent<TextMeshProUGUI>().text = GetTimeText(Utils.SURVIVE_TIME_TEXT,gameOverTime);
+            .GetComponent<TextMeshProUGUI>().text = string.Format(Utils.SCORE_TEXT,_scorePoints);
         transform.GetChild(0).GetChild(0).GetChild(2)
+            .GetComponent<TextMeshProUGUI>().text = GetTimeText(Utils.SURVIVE_TIME_TEXT,gameOverTime);
+        transform.GetChild(0).GetChild(0).GetChild(4)
+            .GetComponent<TextMeshProUGUI>().text = GetScoreTimeBestText(_scorePoints);
+        transform.GetChild(0).GetChild(0).GetChild(5)
             .GetComponent<TextMeshProUGUI>().text = GetSurviveTimeBestText(gameOverTime);
+       
 
         Time.timeScale = 0;
     }
@@ -99,6 +119,7 @@ public class UIController : MonoBehaviour
         Application.targetFrameRate = 60;
         _sliderPlayer = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Slider>();
         _bulletText = transform.GetChild(1).GetChild(0).GetChild(3).GetComponent<TextMeshProUGUI>();
+        _scoreText = transform.GetChild(1).GetChild(0).GetChild(5).GetComponent<TextMeshProUGUI>();
 
         _sliderZumbi = transform.GetChild(1).GetChild(1).GetChild(0).GetComponent<Slider>();
         _zumbiText = transform.GetChild(1).GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
@@ -106,6 +127,10 @@ public class UIController : MonoBehaviour
 
         _bulletText.text = 0.ToString();
         _bulletText.color = Color.white;
+
+        _scoreText.text = "000";
+
+        _scorePoints = 0;
 
     }
 
