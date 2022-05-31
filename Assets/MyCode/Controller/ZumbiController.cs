@@ -12,6 +12,7 @@ public class ZumbiController : MonoBehaviour, ILivingController {
     private Vector3 offsetInstance;
     private UIController uiInstance;
     private PlayerController playerInstance;
+    private bool die;
 
 
     void Start() {
@@ -19,6 +20,7 @@ public class ZumbiController : MonoBehaviour, ILivingController {
         offsetInstance = Utils.GetRandomByPosition(transform.position,Utils.SEEK_DISTANCE);
         uiInstance = UIController.UIInstance;
         playerInstance = PlayerController.PlayerInstance;
+        die = false;
     }
 
     public static void CreateInstance(int id,Vector3 position,Quaternion rotation) {
@@ -40,6 +42,12 @@ public class ZumbiController : MonoBehaviour, ILivingController {
     }
 
     void Update() {
+
+        if(die) {
+            StartCoroutine(PrepareToDie());
+            this.enabled = false;
+            return;
+        }
         
         if(bullet != null) {
             StartCoroutine(GetNextHit(bullet));
@@ -100,6 +108,9 @@ public class ZumbiController : MonoBehaviour, ILivingController {
         int hit = bullet.GetNextHit();
         while(hit != 0) {
             TakeHit(hit);
+            if(die) {
+                yield break;
+            }
             uiInstance.SetZumbiBar(zumbi.Life);
             hit = bullet.GetNextHit();
             yield return new WaitForSeconds(1f);
@@ -107,25 +118,29 @@ public class ZumbiController : MonoBehaviour, ILivingController {
         uiInstance.HideZumbi();
     }
 
-    
-
-
+   
     public void TakeHit(int hit) {
         uiInstance.InitHitZumbi(zumbi);
-       
-        if(zumbi.ReduceLife(hit)) {
-            ToDie();
-        }
+        die = zumbi.ReduceLife(hit);
         basicAnimator.OnTakeHit(true);
     }
 
-
-    public void ToDie() {
+    IEnumerator PrepareToDie() {
+        basicAnimator.OnDie();
         AudioSourceController.AudioSourceInstance.PlayOneShot(AttackAudio);
-        GivePickUps();
         uiInstance.SetScore(zumbi.Points);
         uiInstance.HideZumbi();
-        Destroy(gameObject);
+        yield return new WaitForSeconds(Utils.IMPACT_DISTANCE);
+        ToDie();
+    }
+
+
+
+    public void ToDie() {
+        GivePickUps();
+        GetComponent<Collider>().enabled = false;
+        zumbi.DropOut();
+        Destroy(gameObject,Utils.IMPACT_DISTANCE);
     }
 
     public void Restore() {

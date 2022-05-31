@@ -48,6 +48,11 @@ public class BasicMovesDomain: BasicDomain {
             );
     }
 
+    public void DropOut() {
+        Rigidbody.constraints = RigidbodyConstraints.None;
+        Rigidbody.velocity = Vector3.zero;
+    }
+
 
 
 

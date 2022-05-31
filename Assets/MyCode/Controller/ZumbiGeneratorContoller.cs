@@ -9,7 +9,7 @@ public class ZumbiGeneratorContoller : MonoBehaviour, IGeneratorController
  
 
     private void Start() {
-        timeToNew = Utils.GetTimeToNew(3);
+        timeToNew = Utils.GetTimeToNew(1);
         zumbiLayerMask = LayerMask.GetMask(noContact);
     }
 
@@ -36,7 +36,6 @@ public class ZumbiGeneratorContoller : MonoBehaviour, IGeneratorController
     }
 
     
-
     public void SetTimeToNew(int timeToNew) {
         this.timeToNew = timeToNew;
     }

@@ -614,7 +614,7 @@ ModelImporter:
     second: Walk
   - first:
       74: 7400002
-    second: Zumbi_Andar
+    second: Zumbi_Walk
   - first:
       74: 7400004
     second: Zombie_Idle
@@ -630,6 +630,9 @@ ModelImporter:
   - first:
       74: -4958177180427616710
     second: Zumbi_Idle
+  - first:
+      74: -831483281889380513
+    second: Zumbi_Die
   externalObjects: {}
   materials:
     materialImportMode: 0
@@ -663,7 +666,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Zumbi_Andar
+      name: Zumbi_Walk
       takeName: Take 001
       internalID: 0
       firstFrame: 155
