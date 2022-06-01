@@ -18,16 +18,21 @@ public class BasicDomain {
         get; private set;
     }
 
+    public bool Dead {
+        get; private set;
+    }
+
 
     public BasicDomain(int id,string name, int life) {
         Id = id;
         Life = life;
         InitialLife = life;
         Name = name;
+        Dead = false;
     }
 
 
-    public void RestoreLife() {
+    public virtual void RestoreLife() {
 
         int RestoreLife = InitialLife - Life;
         if(RestoreLife < 1) {
@@ -37,11 +42,13 @@ public class BasicDomain {
         Life += RestoreLife / 2;
 
     }
-    public bool ReduceLife(int reduce) {
+    public virtual bool ReduceLife(int reduce) {
         Life -= reduce;
         
         if(Life < 1) {
+            Dead = true;
             return true;
+
         }
         return false;
     }

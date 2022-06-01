@@ -12,7 +12,7 @@ public class ZumbiController : MonoBehaviour, ILivingController {
     private Vector3 offsetInstance;
     private UIController uiInstance;
     private PlayerController playerInstance;
-    private bool die;
+   
 
 
     void Start() {
@@ -20,7 +20,6 @@ public class ZumbiController : MonoBehaviour, ILivingController {
         offsetInstance = Utils.GetRandomByPosition(transform.position,Utils.SEEK_DISTANCE);
         uiInstance = UIController.UIInstance;
         playerInstance = PlayerController.PlayerInstance;
-        die = false;
     }
 
     public static void CreateInstance(int id,Vector3 position,Quaternion rotation) {
@@ -43,7 +42,7 @@ public class ZumbiController : MonoBehaviour, ILivingController {
 
     void Update() {
 
-        if(die) {
+        if(zumbi.Dead) {
             StartCoroutine(PrepareToDie());
             this.enabled = false;
             return;
@@ -108,7 +107,7 @@ public class ZumbiController : MonoBehaviour, ILivingController {
         int hit = bullet.GetNextHit();
         while(hit != 0) {
             TakeHit(hit);
-            if(die) {
+            if(zumbi.Dead) {
                 yield break;
             }
             uiInstance.SetZumbiBar(zumbi.Life);
@@ -121,7 +120,7 @@ public class ZumbiController : MonoBehaviour, ILivingController {
    
     public void TakeHit(int hit) {
         uiInstance.InitHitZumbi(zumbi);
-        die = zumbi.ReduceLife(hit);
+        zumbi.ReduceLife(hit);
         basicAnimator.OnTakeHit(true);
     }
 
@@ -140,6 +139,7 @@ public class ZumbiController : MonoBehaviour, ILivingController {
         GivePickUps();
         GetComponent<Collider>().enabled = false;
         zumbi.DropOut();
+        enabled = false;
         Destroy(gameObject,Utils.IMPACT_DISTANCE);
     }
 

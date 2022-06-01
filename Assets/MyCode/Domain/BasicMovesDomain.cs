@@ -29,18 +29,22 @@ public class BasicMovesDomain: BasicDomain {
         Walk = false;
     }
 
-    public void Move(Vector3 direction) {
-            int speed = Speed;
-            if(Walk) {
-                speed = Speed - (Speed / 3);
-            }
+    public int TryWalkOrRun() {
+        int speed = Speed;
+        if(Walk) {
+           speed -= (speed / 3);
+        }
+        return speed;
+    }
 
+    public virtual void Move(Vector3 direction) {
+        
         Rigidbody.MovePosition(
-            Rigidbody.position + (speed * Time.deltaTime * direction)
+            Rigidbody.position + (TryWalkOrRun() * Time.deltaTime * direction)
             );
     }
 
-    public void Rotation(Vector3 direction) {
+    public virtual void Rotation(Vector3 direction) {
         Rigidbody.MoveRotation(
             Quaternion.LookRotation(
                 direction
@@ -48,7 +52,7 @@ public class BasicMovesDomain: BasicDomain {
             );
     }
 
-    public void DropOut() {
+    public virtual void DropOut() {
         Rigidbody.constraints = RigidbodyConstraints.None;
         Rigidbody.velocity = Vector3.zero;
     }

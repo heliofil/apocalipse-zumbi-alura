@@ -36,6 +36,7 @@ public static class Utils {
     public const string BASE_FLOOR_TAG = "BaseFloor";
     public const string GUNPACK_TAG = "GunPack";
     public const string ZUMBI_TAG = "Zumbi";
+    public const string BOSS_TAG = "Boss";
     public const string VERTICAL = "Vertical";
     public const string HORIZONTAL = "Horizontal";
 

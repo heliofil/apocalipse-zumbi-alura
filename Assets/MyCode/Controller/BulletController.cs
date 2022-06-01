@@ -24,10 +24,16 @@ public class BulletController : MonoBehaviour
    
    
     private void OnTriggerEnter(Collider other) {
-        if(other.TryGetComponent<ZumbiController>(out ZumbiController zumbi)) {
-            zumbi.SetBullet(bullet);
+        switch(other.tag) {
+            case Utils.ZUMBI_TAG:
+               other.GetComponent<ZumbiController>().SetBullet(bullet);
+            break;
+            case Utils.BOSS_TAG:
+                other.GetComponent<BossController>().TakeHit(bullet.AllHits);
+            break;
         }
         Destroy(gameObject);
+
     }
 
 

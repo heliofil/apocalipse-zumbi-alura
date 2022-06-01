@@ -16,6 +16,10 @@ public class BulletDomain: BasicMovesDomain {
     public int[] Hits;
     public Color Color { get;}
 
+    public int AllHits {
+        get;
+    }
+
 
     public BulletDomain(Rigidbody rigidbody,int id): this(rigidbody,id,BULLET_NAME,SPEED_BULLET_DEFINITION[id],HITS_BULLET_DEFINITION[id]) {
 
@@ -26,6 +30,13 @@ public class BulletDomain: BasicMovesDomain {
         this.Hits = hits;
         this.hitId = 0;
         this.Color = Utils.COLOR_DEFINITION[id];
+        foreach(int hit in hits) {
+            if(hit < 1) {
+                break;
+            }
+            AllHits += hit;
+            
+        }
     }
 
     public int GetNextHit() {

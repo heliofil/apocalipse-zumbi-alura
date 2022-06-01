@@ -18,6 +18,8 @@ public class ZumbiDomain : BasicMovesDomain {
         { 27,12,1,4 }
     };
 
+    private static readonly int[] BOSS_DEFINITION = new int[3] {800,10,7};
+
     private static readonly string[] ZUMBI_DEFINITION_NAME = new string[Utils.ZUMBI_DEFINITION_SIZE] {
         "Mille",
         "Zac",
@@ -42,7 +44,7 @@ public class ZumbiDomain : BasicMovesDomain {
         get;
     }
 
-
+   
     public ZumbiDomain(Rigidbody rigidbody,int id) : this(rigidbody,ZUMBI_DEFINITION[id,0],ZUMBI_DEFINITION_NAME[id],ZUMBI_DEFINITION[id,1],ZUMBI_DEFINITION[id,2],ZUMBI_DEFINITION[id,3]) {
 
     }
