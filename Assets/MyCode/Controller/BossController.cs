@@ -25,13 +25,19 @@ public class BossController : MonoBehaviour, ILivingController {
         }
     }
 
+    public static void CreateInstance(Vector3 position,Quaternion rotation) {
+        Instantiate(Resources.Load<GameObject>(Utils.BOSS_PATH),
+            Utils.GetRandomByPosition(position,Utils.IMPACT_DISTANCE),
+            rotation);
+    }
+
     public void Restore() {
         boss.RestoreLife();
     }
 
     public void TakeHit(int hit) {
         boss.ReduceLife(hit);
-        
+        uiInstance.SetBossBar(boss.Life);
     }
 
     IEnumerator PrepareToDie() {
@@ -45,6 +51,7 @@ public class BossController : MonoBehaviour, ILivingController {
     }
 
     public void ToDie() {
+        uiInstance.HideBoss();
         boss.DropOut();
         GetComponent<Collider>().enabled = false;
         enabled = false;
@@ -58,7 +65,7 @@ public class BossController : MonoBehaviour, ILivingController {
         uiInstance = UIController.UIInstance;
         boss = new BossDomain(GetComponent<Rigidbody>(),GetComponent<NavMeshAgent>());
         animator = GetComponent<BasicAnimator>();
-        
+        uiInstance.InitBoss(boss);
     }
 
     void Attack() {
@@ -91,7 +98,5 @@ public class BossController : MonoBehaviour, ILivingController {
         animator.OnRun();
         
     }
-
-
 
 }

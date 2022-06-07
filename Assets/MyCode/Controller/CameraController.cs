@@ -4,10 +4,10 @@ public class CameraController : MonoBehaviour
 {
 
     private PlayerController playerInstance;
-
+   
     private void Start() {
         playerInstance = PlayerController.PlayerInstance;
-
+       
     }
 
 
@@ -16,13 +16,12 @@ public class CameraController : MonoBehaviour
 
     void Update() {
         transform.position = Move();
+
     }
 
     private Vector3 Move() {
 
-       
-        
-
+      
         return new Vector3(
             DelayPosition(playerInstance.transform.position.x),
             DelayPosition(playerInstance.transform.position.y),

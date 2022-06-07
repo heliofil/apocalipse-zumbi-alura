@@ -59,7 +59,11 @@ public class FireGunController : MonoBehaviour
         SetMunition(munition);
         munition--;
         AudioSourceController.AudioSourceInstance.PlayOneShot(ShootAudio);
-        transform.rotation = new Quaternion(transform.rotation.x + Random.Range(-0.02f,0.02f),transform.rotation.y,transform.rotation.z,transform.rotation.w);
+        float rotationX = Random.Range(-0.02f,0.02f);
+        if(munition > 6) {
+            rotationX += transform.rotation.x;
+        }
+        transform.rotation.Set(rotationX,0,0,0);
     }
 
 }

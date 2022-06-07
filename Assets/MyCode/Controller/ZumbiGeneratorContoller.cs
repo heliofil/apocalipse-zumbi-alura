@@ -30,7 +30,7 @@ public class ZumbiGeneratorContoller : MonoBehaviour, IGeneratorController
             return;
         }
 
-       
+
         CreateInstance();
         
     }
@@ -50,9 +50,19 @@ public class ZumbiGeneratorContoller : MonoBehaviour, IGeneratorController
         if(Physics.OverlapSphere(position,Utils.IMPACT_DISTANCE,zumbiLayerMask).Length > 0) {
             return;
         }
+
         int rad = Random.Range(0,13);
+
+        if((GameObject.FindWithTag(Utils.BOSS_TAG) == null) && (rad > 3)) {
+            BossController.CreateInstance(position,transform.rotation);
+        }
+
         ZumbiController.CreateInstance(rad,position,transform.rotation);
         SetTimeToNew(Utils.GetTimeToNew(rad));
+        return;
+
+
+
     }
 
 

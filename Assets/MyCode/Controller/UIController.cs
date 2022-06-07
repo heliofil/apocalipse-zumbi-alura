@@ -9,6 +9,7 @@ public class UIController : MonoBehaviour
     
     private Slider _sliderPlayer;
     private Slider _sliderZumbi;
+    private Slider _sliderBoss;
     private TextMeshProUGUI _zumbiText;
     private TextMeshProUGUI _bulletText;
     private TextMeshProUGUI _scoreText;
@@ -105,12 +106,27 @@ public class UIController : MonoBehaviour
         _zumbiImg.sprite = Utils.GetZumbiSpriteById(zumbi.Id);
     }
 
+    public void InitBoss(BossDomain boss) {
+        transform.GetChild(1).GetChild(2).gameObject.SetActive(true);
+        _sliderBoss.maxValue = boss.InitialLife;
+        _sliderBoss.value = boss.InitialLife;
+    }
+
+    public void SetBossBar(int lifeBar) {
+        _sliderBoss.value = lifeBar;
+
+    }
+
     public void SetZumbiBar(int lifeBar) {
         _sliderZumbi.value = lifeBar;
     }
 
     public void HideZumbi() {
         transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
+    }
+
+    public void HideBoss() {
+        transform.GetChild(1).GetChild(2).gameObject.SetActive(false);
     }
 
 
@@ -124,6 +140,9 @@ public class UIController : MonoBehaviour
         _sliderZumbi = transform.GetChild(1).GetChild(1).GetChild(0).GetComponent<Slider>();
         _zumbiText = transform.GetChild(1).GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
         _zumbiImg = transform.GetChild(1).GetChild(1).GetChild(2).GetComponent<Image>();
+
+        _sliderBoss = transform.GetChild(1).GetChild(2).GetChild(0).GetComponent<Slider>();
+
 
         _bulletText.text = 0.ToString();
         _bulletText.color = Color.white;
