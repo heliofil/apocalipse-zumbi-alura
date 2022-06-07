@@ -10,12 +10,15 @@ public class UIController : MonoBehaviour
     private Slider _sliderPlayer;
     private Slider _sliderZumbi;
     private Slider _sliderBoss;
+    private Image _sliderImagePlayer;
+    private Image _sliderImageBoss;
     private TextMeshProUGUI _zumbiText;
     private TextMeshProUGUI _bulletText;
     private TextMeshProUGUI _scoreText;
     private static UIController uIInstance;
     private Image _zumbiImg;
     private int _scorePoints;
+
 
     public static UIController UIInstance {
         get {
@@ -35,6 +38,8 @@ public class UIController : MonoBehaviour
 
     public void SetLifeBar(int lifeBar) {
         _sliderPlayer.value = lifeBar;
+        float partialLife = _sliderPlayer.value / _sliderPlayer.maxValue;
+        _sliderImagePlayer.color = Color.Lerp(Utils.COLOR_DEFINITION[1],Utils.COLOR_DEFINITION[3],partialLife);
     }
 
 
@@ -110,10 +115,25 @@ public class UIController : MonoBehaviour
         transform.GetChild(1).GetChild(2).gameObject.SetActive(true);
         _sliderBoss.maxValue = boss.InitialLife;
         _sliderBoss.value = boss.InitialLife;
+        _sliderImageBoss.color = Utils.COLOR_DEFINITION[0];
+       
     }
 
     public void SetBossBar(int lifeBar) {
         _sliderBoss.value = lifeBar;
+        float partialLife = _sliderBoss.value / _sliderBoss.maxValue;
+        if(partialLife < 0.21f) {
+            _sliderImageBoss.color = Utils.COLOR_DEFINITION[1];
+            return;
+        }
+        if(partialLife < 0.50f) {
+            _sliderImageBoss.color = Utils.COLOR_DEFINITION[2];
+            return;
+        }
+        if(partialLife < 0.71f) {
+            _sliderImageBoss.color = Utils.COLOR_DEFINITION[3];  
+            return;
+        }
 
     }
 
@@ -127,6 +147,7 @@ public class UIController : MonoBehaviour
 
     public void HideBoss() {
         transform.GetChild(1).GetChild(2).gameObject.SetActive(false);
+
     }
 
 
@@ -136,13 +157,14 @@ public class UIController : MonoBehaviour
         _sliderPlayer = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Slider>();
         _bulletText = transform.GetChild(1).GetChild(0).GetChild(3).GetComponent<TextMeshProUGUI>();
         _scoreText = transform.GetChild(1).GetChild(0).GetChild(5).GetComponent<TextMeshProUGUI>();
+        _sliderImagePlayer = transform.GetChild(1).GetChild(0).GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>();
 
         _sliderZumbi = transform.GetChild(1).GetChild(1).GetChild(0).GetComponent<Slider>();
         _zumbiText = transform.GetChild(1).GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
         _zumbiImg = transform.GetChild(1).GetChild(1).GetChild(2).GetComponent<Image>();
 
         _sliderBoss = transform.GetChild(1).GetChild(2).GetChild(0).GetComponent<Slider>();
-
+        _sliderImageBoss = transform.GetChild(1).GetChild(2).GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>();
 
         _bulletText.text = 0.ToString();
         _bulletText.color = Color.white;
