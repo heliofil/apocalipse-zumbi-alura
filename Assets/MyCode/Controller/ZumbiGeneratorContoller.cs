@@ -53,7 +53,7 @@ public class ZumbiGeneratorContoller : MonoBehaviour, IGeneratorController
 
         int rad = Random.Range(0,13);
 
-        if((GameObject.FindWithTag(Utils.BOSS_TAG) == null) && (rad > 9)) {
+        if((GameObject.FindWithTag(Utils.BOSS_TAG) == null) && (rad > 11)) {
             BossController.CreateInstance(position,transform.rotation);
         }
 
