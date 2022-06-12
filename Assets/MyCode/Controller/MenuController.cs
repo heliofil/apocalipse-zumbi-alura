@@ -13,10 +13,21 @@ public class MenuController : MonoBehaviour
     }
 
     public void NewGame() {
-        SceneManager.LoadScene(Utils.SCENE_PARKING);
+        StartCoroutine(DelayNewGame());
     }
     public void ExitGame() {
+        StartCoroutine(DelayExitGame());
+    }
+
+    IEnumerator DelayNewGame() {
+        yield return new WaitForSeconds(0.3f);
+        SceneManager.LoadScene(Utils.SCENE_PARKING);
+    }
+
+    IEnumerator DelayExitGame() {
+        yield return new WaitForSeconds(0.3f);
         Application.Quit();
     }
+
 
 }
