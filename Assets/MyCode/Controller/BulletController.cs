@@ -24,12 +24,13 @@ public class BulletController : MonoBehaviour
    
    
     private void OnTriggerEnter(Collider other) {
+        Quaternion opositeLook = Quaternion.LookRotation(-transform.forward);
         switch(other.tag) {
             case Utils.ZUMBI_TAG:
-               other.GetComponent<ZumbiController>().SetBullet(bullet);
+               other.GetComponent<ZumbiController>().SetBloodBullet(bullet,transform.position,opositeLook);
             break;
             case Utils.BOSS_TAG:
-                other.GetComponent<BossController>().TakeHit(bullet.AllHits);
+                other.GetComponent<BossController>().TakeBloodHit(bullet.AllHits,transform.position,opositeLook);
             break;
         }
         Destroy(gameObject);

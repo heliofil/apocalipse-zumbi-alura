@@ -30,11 +30,13 @@ public class ZumbiController : MonoBehaviour, ILivingController {
            .DefineZumbiById(id);
     }
 
+    
 
-    public void SetBullet(BulletDomain bulletDomain) {
+    public void SetBloodBullet(BulletDomain bulletDomain,Vector3 position,Quaternion quaternion) {
         bullet = bulletDomain;
+        Instantiate(Resources.Load<GameObject>(Utils.BLOOD_PATH),position,quaternion);
     }
-
+        
     public void DefineZumbiById(int id) {
         zumbi = new ZumbiDomain(GetComponent<Rigidbody>(),id);
         transform.GetChild(zumbi.Id).gameObject.SetActive(true);

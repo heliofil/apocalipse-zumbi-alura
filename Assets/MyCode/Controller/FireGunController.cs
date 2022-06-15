@@ -9,7 +9,11 @@ public class FireGunController : MonoBehaviour
     private int bulletType;
     private UIController uiInstance;
     private PlayerController playerInstance;
+
+    private int waitCandence;
     
+
+
     public void SetMunition(int munition) {
         this.munition = munition;
         uiInstance.SetBulletText(this.munition);
@@ -35,6 +39,7 @@ public class FireGunController : MonoBehaviour
 
         uiInstance = UIController.UIInstance;
         playerInstance = PlayerController.PlayerInstance;
+        generateCadenceTime();
 
     }
 
@@ -48,13 +53,20 @@ public class FireGunController : MonoBehaviour
         }
 
         if(Input.GetButtonDown(Utils.BUTTON_FIRE)) {
-            Shoot();
+            if(waitCandence<0) {
+                Shoot();
+                generateCadenceTime();
+            }
         }
-
 
     }
 
+    private void FixedUpdate() {
+        waitCandence--;
+    }
+
     void Shoot() {
+
         BulletController.CreateInstance(bulletType,ShootAim.transform.position,ShootAim.transform.rotation);
         SetMunition(munition);
         munition--;
@@ -64,6 +76,10 @@ public class FireGunController : MonoBehaviour
             rotationX += transform.rotation.x;
         }
         transform.rotation.Set(rotationX,0,0,0);
+    }
+
+    void generateCadenceTime() {
+        waitCandence = bulletType * 10;
     }
 
 }

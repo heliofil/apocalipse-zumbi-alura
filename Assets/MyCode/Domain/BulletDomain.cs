@@ -49,6 +49,10 @@ public class BulletDomain: BasicMovesDomain {
         return hit;
     }
 
+    public int getCadencia() {
+        return Id * 30;
+    }
+
 
 
 }

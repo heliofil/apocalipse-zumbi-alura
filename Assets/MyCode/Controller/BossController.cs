@@ -35,6 +35,11 @@ public class BossController : MonoBehaviour, ILivingController {
         boss.RestoreLife();
     }
 
+    public void TakeBloodHit(int hit,Vector3 position,Quaternion quaternion) {
+        TakeHit(hit);
+        Instantiate(Resources.Load<GameObject>(Utils.BLOOD_PATH),position,quaternion);
+    }
+
     public void TakeHit(int hit) {
         boss.ReduceLife(hit);
         uiInstance.SetBossBar(boss.Life);

@@ -18,6 +18,7 @@ public static class Utils {
     public const string ZUMBI_PATH = "MyPrefabs/Zumbi";
     public const string BOSS_PATH = "MyPrefabs/Boss";
     public const string BULLET_PATH = "MyPrefabs/Bullet";
+    public const string BLOOD_PATH = "MyPrefabs/Blood";
     public const string ZUMBI_IMAGE_PATH = "MyImages/Zumbi/";
     public const string MYPREFABS_PATH = "MyPrefabs/";
 
